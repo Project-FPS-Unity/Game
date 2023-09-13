@@ -2,29 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TEC9 : MonoBehaviour
+public class TEC9 : WeaponAbstract
 {
-    public float damage = 10f;
-    public float range = 100f;
-
-    public Camera fpsCam;
-    public ParticleSystem flash;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Shoot();
-        }
-    }
-
-    private void Shoot()
+    protected override void Shoot()
     {
         flash.Play();
         RaycastHit hit;
