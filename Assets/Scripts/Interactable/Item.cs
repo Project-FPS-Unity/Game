@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Board : Interactable
+public class Item : Interactable
 {
     // Start is called before the first frame update
     void Start()
