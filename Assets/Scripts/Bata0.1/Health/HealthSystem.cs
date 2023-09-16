@@ -15,9 +15,10 @@ public class HealthSystem
         currentHealth = maxHealth;
     }
 
-    public void CheckHealth()
+    public float CheckHealth()
     {
         if (currentHealth <= 0) isDead = true;
+        return currentHealth;
     }
 
     public void TakeDamage(float damage)

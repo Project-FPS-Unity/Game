@@ -51,11 +51,6 @@ public class PlayerScript : CharacterBehaviour
         //Ground Check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        //foreach (Transform item in holder.transform)
-        //{
-            
-        //}
-
         GetInput();
         SpeedLimit();
         if (grounded) rb.drag = groundDrag;
@@ -123,7 +118,7 @@ public class PlayerScript : CharacterBehaviour
     {
         //Reset Y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
+        //Jump
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 

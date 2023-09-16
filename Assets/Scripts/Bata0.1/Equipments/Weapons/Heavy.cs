@@ -21,6 +21,19 @@ public class Heavy : Equipment
     private float reloadTime = 1f;
     private bool isReloading = false;
 
+    //Animation
+    private Animator animator;
+
+    private void OnEnable()
+    {
+        isReloading = false;
+    }
+
+    private void Start()
+    {
+        animator = GetComponentInParent<Animator>();
+    }
+
     // Override
     protected override void Action()
     {
@@ -30,10 +43,10 @@ public class Heavy : Equipment
     protected override IEnumerator Reload()
     {
         isReloading = true;
-
+        animator.SetBool("isReload", true);
         yield return new WaitForSeconds(reloadTime);
-
         currentAmmo = maxAmmo;
+        animator.SetBool("isReload", false);
         isReloading = false;
     }
 
@@ -54,11 +67,11 @@ public class Heavy : Equipment
         if (isHit)
         {
             Debug.Log(hit.transform.name);
-            //    Target target = hit.transform.GetComponent<Target>();
-            //    if (target != null)
-            //    {
-            //        target.TakeDamage(Damage);
-            //    }
+            Enemy enemy = hit.transform.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(Damage);
+            }
         }
         else
         {
@@ -84,9 +97,5 @@ public class Heavy : Equipment
         {
             Shoot();
         }
-    }
-    private void OnEnable()
-    {
-        isReloading = false;
     }
 }
