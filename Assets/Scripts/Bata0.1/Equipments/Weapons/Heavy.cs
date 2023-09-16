@@ -7,64 +7,50 @@ public class Heavy : Equipment
     [Header("Camara")]
     [SerializeField] private Camera FPSCam;
     [Header("Gun Details")]
-    private float Damage = 20f;
-    private float Range = 100f;
-    private int MaxAmmo = 50;
-    private int CurrentAmmo;
-    private int MaxMagazine = 5;
-    private int CurrentMagazine;
-    private float ReloadTime = 1f;
-    private bool IsReloading = false;
     [Header("VFX")]
-    [SerializeField] public ParticleSystem MuzzleFlash;
+    [SerializeField] private ParticleSystem MuzzleFlash;
+    // Ammo
+    private int maxAmmo = 50;
+    private int currentAmmo;
+    // Magazine
+    private int maxMagazine = 5;
+    private int currentMagazine;
 
-    // Start is called before the first frame update
-    void Start()
+    private float Damage = 20f;
+    private float range = 10f;
+    private float reloadTime = 1f;
+    private bool isReloading = false;
+
+    // Override
+    protected override void Action()
     {
-        CurrentAmmo = MaxAmmo;
+        if (isReloading) return;
+        CheckShoot();
+    }
+    protected override IEnumerator Reload()
+    {
+        isReloading = true;
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 
-    void OnEnable()
+    protected override void InitAmmo()
     {
-        IsReloading = false;
-
+        currentAmmo = maxAmmo;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (IsReloading) return;
-        //Action();
-    }
-
-    public override void Action()
-    {
-        //if (CurrentAmmo <= 0)
-        //{
-        //    StartCoroutine(Reload());
-        //    return;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    StartCoroutine(Reload());
-        //    return;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Mouse0))
-        //{
-        //    Shoot();
-        //}
-        Debug.Log("Action!!!");
-    }
-
+    // Equipment Action
     private void Shoot()
     {
         MuzzleFlash.Play();
-        CurrentAmmo--;
+        currentAmmo--;
+        Debug.Log("current ammo : " + currentAmmo);
         RaycastHit hit;
         bool isHit;
-        isHit = Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, Range);
+        isHit = Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, range);
         if (isHit)
         {
             Debug.Log(hit.transform.name);
@@ -80,13 +66,27 @@ public class Heavy : Equipment
         }
     }
 
-    private IEnumerator Reload()
+    private void CheckShoot()
     {
-        IsReloading = true;
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
 
-        yield return new WaitForSeconds(ReloadTime);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
+            return;
+        }
 
-        CurrentAmmo = MaxAmmo;
-        IsReloading = false;
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Shoot();
+        }
+    }
+    private void OnEnable()
+    {
+        isReloading = false;
     }
 }
