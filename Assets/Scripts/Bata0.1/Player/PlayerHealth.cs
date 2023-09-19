@@ -1,54 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Optional -> Add Armor Point
-    private float health;
-    private float lerpTimer;
-    public float maxHealth = 100;
-    public float chipSpeed = 2f;
-    public TextMeshProUGUI healthText;
-    public Image frontHealthBar;
-    public Image backHealthBar;
+    // Health bar UI
+    [SerializeField] private Image frontHealthBar;
+    [SerializeField] private Image backHealthBar;
+    [SerializeField] private TextMeshProUGUI healthText;
+
+    // Varuables
+    private HealthSystem health;
+    private float maxHealth = 100f;
+    private void Awake()
+    {
+        health = new HealthSystem(maxHealth, 0f, 2f);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        health.InitHealth();
     }
 
     // Update is called once per frame
     void Update()
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
+        health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
         UpdateHealthUI();
         // Test Damage and Heal Function
         if (Input.GetKeyDown(KeyCode.F))
         {
-            TakeDamge(Random.Range(1, 10));
+            health.TakeDamage(Random.Range(1, 10));
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            RestoreHealth(Random.Range(1, 10));
+            health.RestoreHealth(Random.Range(1, 10));
         }
     }
-
-    public void UpdateHealthUI()
+    
+    // Player's HealthBar UI Update
+    private void UpdateHealthUI()
     {
         // Debug.Log(health);
-        healthText.text = health.ToString();
+        healthText.text = health.GetHealth().ToString();
         float fillF = frontHealthBar.fillAmount;
         float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
+        float hFraction = health.GetHealth() / health.GetMaxHealth();
         if (fillB > hFraction)
         {
             frontHealthBar.fillAmount = hFraction;
             backHealthBar.color = Color.red;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
+            health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
+            float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
             percentComplete *= percentComplete;
             backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
         }
@@ -57,22 +62,10 @@ public class PlayerHealth : MonoBehaviour
         {
             backHealthBar.color = Color.green;
             backHealthBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
+            health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
+            float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
             percentComplete *= percentComplete;
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
         }
-    }
-
-    public void TakeDamge(float damage)
-    {
-        health -= damage;
-        lerpTimer = 0f;
-    }
-
-    public void RestoreHealth(float healAmount)
-    {
-        health += healAmount;
-        lerpTimer = 0f;
     }
 }
