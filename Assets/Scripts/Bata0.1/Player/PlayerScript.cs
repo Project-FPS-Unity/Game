@@ -10,6 +10,10 @@ public class PlayerScript : CharacterBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     private HealthSystem health;
     private float maxHealth = 100f;
+    private bool isUsedMedkit = true;
+    private float healAmount;
+    private bool isHit = false;
+    private float damageAmount;
 
     [Header("Movement")]
     private float moveSpeed = 7f;
@@ -153,14 +157,25 @@ public class PlayerScript : CharacterBehaviour
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
         UpdateHealthUI();
-        // Test Damage and Heal Function
+        // Test Damage and Heal System
         if (Input.GetKeyDown(KeyCode.F))
         {
-            health.TakeDamage(Random.Range(1, 10));
+            health.TakeDamage(Random.Range(5, 10));
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            health.RestoreHealth(Random.Range(1, 10));
+            health.RestoreHealth(Random.Range(5, 10));
+        }
+        // Damage and Heal System
+        if (isHit)
+        {
+            health.TakeDamage(damageAmount);
+            isHit = false;
+        }
+        if (!isUsedMedkit)
+        {
+            health.RestoreHealth(healAmount);
+            isUsedMedkit = true;
         }
     }
     private void UpdateHealthUI()
@@ -189,5 +204,18 @@ public class PlayerScript : CharacterBehaviour
             percentComplete *= percentComplete;
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
         }
+    }
+
+    // Call These function 
+    public void UseMedkit(float heal)
+    {
+        healAmount = heal;
+        isUsedMedkit = false;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        damageAmount = damage;
+        isHit = true;
     }
 }
