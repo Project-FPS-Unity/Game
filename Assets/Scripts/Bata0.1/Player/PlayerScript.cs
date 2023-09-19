@@ -1,10 +1,15 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : CharacterBehaviour
 {
     [Header("Health")]
-    private float maxHealth = 100f;
+    [SerializeField] private Image frontHealthBar;
+    [SerializeField] private Image backHealthBar;
+    [SerializeField] private TextMeshProUGUI healthText;
     private HealthSystem health;
+    private float maxHealth = 100f;
 
     [Header("Movement")]
     private float moveSpeed = 7f;
@@ -30,10 +35,13 @@ public class PlayerScript : CharacterBehaviour
     [Header("EquipmentHolder")]
     public EquipmentHolder holder;
 
+    private void Awake()
+    {
+        health = new HealthSystem(maxHealth, 0f, 2f);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        health = new HealthSystem(maxHealth);
         health.InitHealth();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -47,6 +55,7 @@ public class PlayerScript : CharacterBehaviour
         //Health Check
         health.CheckHealth();
         if (health.isDead) Die();
+        Health();
 
         //Ground Check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
@@ -82,6 +91,7 @@ public class PlayerScript : CharacterBehaviour
 
     protected override void Die()
     {
+        
         Destroy(gameObject);
     }
 
@@ -136,6 +146,48 @@ public class PlayerScript : CharacterBehaviour
         {
             Vector3 limitVelocity = flatVelocity.normalized * moveSpeed;
             rb.velocity = new Vector3(limitVelocity.x, rb.velocity.y, limitVelocity.z);
+        }
+    }
+
+    private void Health()
+    {
+        health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
+        UpdateHealthUI();
+        // Test Damage and Heal Function
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            health.TakeDamage(Random.Range(1, 10));
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            health.RestoreHealth(Random.Range(1, 10));
+        }
+    }
+    private void UpdateHealthUI()
+    {
+        // Debug.Log(health);
+        healthText.text = health.GetHealth().ToString();
+        float fillF = frontHealthBar.fillAmount;
+        float fillB = backHealthBar.fillAmount;
+        float hFraction = health.GetHealth() / health.GetMaxHealth();
+        if (fillB > hFraction)
+        {
+            frontHealthBar.fillAmount = hFraction;
+            backHealthBar.color = Color.red;
+            health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
+            float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
+            percentComplete *= percentComplete;
+            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+        }
+
+        if (fillF < hFraction)
+        {
+            backHealthBar.color = Color.green;
+            backHealthBar.fillAmount = hFraction;
+            health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
+            float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
+            percentComplete *= percentComplete;
+            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
         }
     }
 }
