@@ -44,7 +44,6 @@ public class PlayerScript : CharacterBehaviour
     [SerializeField] private float distance = 3f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private TextMeshProUGUI promptText;
-    private string promptMessage;
 
     private void Awake()
     {

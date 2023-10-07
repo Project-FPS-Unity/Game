@@ -5,7 +5,7 @@ using UnityEngine;
 public class Medkit : Equipment
 {
     private int medkitNum = 1;
-    private int currentMedkitNum;
+    public int currentMedkitNum;
     private float healAmount = 20f;
     private PlayerScript player;
 
@@ -33,12 +33,17 @@ public class Medkit : Equipment
     // Equipment Action
     private void UseMedkit()
     {
-        if (Input.GetMouseButtonDown(0) && currentMedkitNum > 0)
+        if(currentMedkitNum > 0)
         {
-            player.UseMedkit(healAmount);
-            currentMedkitNum--;
-            Debug.Log("Medkit is used");
-            //Destroy(gameObject);
+            gameObject.SetActive(true);
+            if (Input.GetMouseButtonDown(0))
+            {
+                player.UseMedkit(healAmount);
+                currentMedkitNum--;
+                SetCurrentMedkit(currentMedkitNum);
+                Debug.Log("Medkit is used");
+                //Destroy(gameObject);
+            }
         }
         if (currentMedkitNum <= 0)
         {
@@ -46,5 +51,10 @@ public class Medkit : Equipment
             gameObject.SetActive(false);
         }
         
+    }
+    
+    public void SetCurrentMedkit(int amount)
+    {
+        currentMedkitNum = amount;
     }
 }

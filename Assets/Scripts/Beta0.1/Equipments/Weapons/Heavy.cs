@@ -7,22 +7,30 @@ public class Heavy : Equipment
     [Header("Camara")]
     [SerializeField] private Camera fpsCam;
     [Header("Gun Details")]
+
     [Header("VFX")]
     [SerializeField] private ParticleSystem muzzleFlash;
-    // Ammo
-    private int maxAmmo = 50;
-    private int currentAmmo;
-    // Magazine
-    private int maxMagazine = 5;
-    private int currentMagazine;
 
-    private float damage = 20f;
-    private float range = 10f;
     private float reloadTime = 1f;
     private bool isReloading = false;
 
     //Animation
     private Animator animator;
+
+    [Header("Reference")]
+    [SerializeField] private Transform cam;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private GameObject objectToFire;
+
+    [Header("Settings")]
+    [SerializeField] private float fireCooldown;
+    private int maxAmmo = 100;
+    private int currentAmmo;
+
+    [Header("Throwing")]
+    [SerializeField] private float bulletForce;
+    [SerializeField] private float bulletUpwardForce;
+    private bool readyToFire;
 
     private void OnEnable()
     {
@@ -52,6 +60,7 @@ public class Heavy : Equipment
 
     protected override void InitAmmo()
     {
+        readyToFire = true;
         currentAmmo = maxAmmo;
     }
 
@@ -59,24 +68,7 @@ public class Heavy : Equipment
     private void Shoot()
     {
         muzzleFlash.Play();
-        currentAmmo--;
-        Debug.Log("current ammo : " + currentAmmo);
-        RaycastHit hit;
-        bool isHit;
-        isHit = Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range);
-        if (isHit)
-        {
-            Debug.Log(hit.transform.name);
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-            }
-        }
-        else
-        {
-            Debug.Log("Not hit");
-        }
+        FireBullet();
     }
 
     private void CheckShoot()
@@ -93,9 +85,44 @@ public class Heavy : Equipment
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetMouseButton(0) && readyToFire && currentAmmo > 0)
         {
+            Debug.Log("Fire!");
             Shoot();
         }
+    }
+
+    private void FireBullet()
+    {
+        readyToFire = false;
+
+        // Insatantiate object to throw
+        GameObject projectile = Instantiate(objectToFire, attackPoint.position, cam.rotation);
+
+        // Get Rigidbody componenet
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+
+        // Calculate direction
+        Vector3 forceDirection = cam.transform.forward;
+        RaycastHit hit;
+        if (Physics.Raycast(cam.position, cam.forward, out hit, 500f))
+        {
+            forceDirection = (hit.point - attackPoint.position).normalized;
+        }
+
+        // Add Force
+        Vector3 forceToAdd = forceDirection * bulletForce + transform.up * bulletUpwardForce;
+
+        projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
+
+        currentAmmo--;
+
+        // Implement throw cooldown
+        Invoke(nameof(ResetFire), fireCooldown);
+    }
+
+    private void ResetFire()
+    {
+        readyToFire = true;
     }
 }

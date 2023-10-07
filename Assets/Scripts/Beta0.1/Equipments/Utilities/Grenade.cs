@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class Grenade : Equipment
 {
-    [SerializeField] private GameObject explosionEffect;
-    [SerializeField] private float delay = 3f;
-    private float countdown;
-    private int maxGrenade = 2;
-    private int currentGrenade;
+    [Header("Reference")]
+    [SerializeField] private Transform cam;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private GameObject objectToThrow;
 
-    private bool hasExploded = false;
+    [Header("Settings")]
+    [SerializeField] private int totalThrows;
+    [SerializeField] private float throwCooldown;
+
+    [Header("Throwing")]
+    [SerializeField] private float delay = 3f;
+    [SerializeField] private float throwForce;
+    [SerializeField] private float throwUpwardForce;
+    private bool readyToThrow;
 
     protected override void Action()
     {
-        countdown -= Time.deltaTime;
-        if (countdown <= 0f && !hasExploded)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && readyToThrow && totalThrows > 0)
         {
-            Explode();
-            hasExploded = true;
+            Throw();
         }
     }
 
     protected override void InitAmmo()
     {
-        explosionEffect = GetComponent<GameObject>();
-        currentGrenade = maxGrenade;
-        countdown = delay;
+        readyToThrow = true;
     }
 
     protected override IEnumerator Reload()
@@ -34,11 +37,37 @@ public class Grenade : Equipment
         throw new System.NotImplementedException();
     }
 
-    private void Explode()
+    private void Throw()
     {
-        Debug.Log("BOOM!");
-        Instantiate(explosionEffect, transform.position, transform.rotation);
+        readyToThrow = false;
 
-        Destroy(gameObject);
+        // Insatantiate object to throw
+        GameObject projectile = Instantiate(objectToThrow, attackPoint.position, cam.rotation);
+
+        // Get Rigidbody componenet
+        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+
+        // Calculate direction
+        Vector3 forceDirection = cam.transform.forward;
+        RaycastHit hit;
+        if (Physics.Raycast(cam.position, cam.forward, out hit, 500f))
+        {
+            forceDirection = (hit.point - attackPoint.position).normalized;
+        }
+
+        // Add Force
+        Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce;
+
+        projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
+
+        totalThrows--;
+
+        // Implement throw cooldown
+        Invoke(nameof(ResetThrow), throwCooldown);
+    }
+
+    private void ResetThrow()
+    {
+        readyToThrow = true;
     }
 }
