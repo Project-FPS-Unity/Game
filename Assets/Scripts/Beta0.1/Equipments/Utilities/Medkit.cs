@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Medkit : Equipment
 {
-    private int medkitNum = 1;
-    public int currentMedkitNum;
+    private int maxMedkit = 1;
+    public int currentMedkit = 1;
     private float healAmount = 20f;
     private PlayerScript player;
+    private bool isUsedMedkit = false;
 
     private void Awake()
     {
@@ -19,10 +20,9 @@ public class Medkit : Equipment
     {
         UseMedkit();
     }
-
     protected override void InitAmmo()
     {
-        currentMedkitNum = medkitNum;
+        SetIsUsedMedkitToFalse();
     }
 
     protected override IEnumerator Reload()
@@ -33,28 +33,42 @@ public class Medkit : Equipment
     // Equipment Action
     private void UseMedkit()
     {
-        if(currentMedkitNum > 0)
+        if(currentMedkit > 0)
         {
-            gameObject.SetActive(true);
+            //gameObject.SetActive(true);
             if (Input.GetMouseButtonDown(0))
             {
                 player.UseMedkit(healAmount);
-                currentMedkitNum--;
-                SetCurrentMedkit(currentMedkitNum);
+                currentMedkit--;
                 Debug.Log("Medkit is used");
                 //Destroy(gameObject);
             }
         }
-        if (currentMedkitNum <= 0)
+        if (currentMedkit <= 0)
         {
             //Debug.Log("You have no Medkit");
-            gameObject.SetActive(false);
+            //Destroy(this.gameObject);
+            
+            SetIsUsedMedkitToTrue();
         }
         
     }
-    
-    public void SetCurrentMedkit(int amount)
+
+    public bool IsUsedMedkit()
     {
-        currentMedkitNum = amount;
+        return isUsedMedkit;
+    }
+
+    public void SetIsUsedMedkitToFalse()
+    {
+        gameObject.SetActive(true);
+        isUsedMedkit = false;
+        currentMedkit = maxMedkit;
+    }
+
+    public void SetIsUsedMedkitToTrue()
+    {
+        gameObject.SetActive(false);
+        isUsedMedkit = true;
     }
 }
