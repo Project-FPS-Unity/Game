@@ -2,94 +2,119 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-using System;
+using UnityEngine.EventSystems;
 
 public class TestAgent : Agent
 {
-    [SerializeField] public Transform target;
-    private float moveSpeed = 7.5f;
-    private float rotateDirection = 1;
+    public Transform target;
+    public RayPerceptionSensorComponent3D enemyVision;
+
+    [SerializeField] private Material succeed;
+    [SerializeField] private Material fail;
+    [SerializeField] private MeshRenderer floor;
+
+    [SerializeField] private Rigidbody rb;
+    private Vector3 moveToDirection;
+    private float moveX;
+    private float moveY;
+    private float moveZ;
+    private float moveSpeed = 8f;
 
     public override void OnEpisodeBegin()
     {
-        transform.position = new Vector3(UnityEngine.Random.Range(-10,10), 1.5f, UnityEngine.Random.Range(-10, 10));
-        target.position = new Vector3(UnityEngine.Random.Range(-10, 10), 1.5f, UnityEngine.Random.Range(-10, 10));
-        transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0,360), 0);
-        int randomNum = UnityEngine.Random.Range(0, 2);
-        if (randomNum == 0) rotateDirection = 1;
-        else rotateDirection = -1;
+        enemyVision = transform.GetComponent<RayPerceptionSensorComponent3D>();
+        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        transform.localRotation = Quaternion.Euler(0, Random.Range(0,360), 0);
     }
 
     //Observe
     public override void CollectObservations(VectorSensor sensor)
     {
         //Observe it's position
-        sensor.AddObservation(transform.position);
+        sensor.AddObservation(transform.localPosition);
         //Observe target position
-        sensor.AddObservation(target.position);
+        sensor.AddObservation(target.localPosition);
     }
 
     //Receive action
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float moveX = actions.ContinuousActions[0];
-        float moveY = actions.ContinuousActions[1];
-        float moveZ = actions.ContinuousActions[2];
-        //Move(moveX, moveZ);
-        Turn(Math.Abs(moveY));
+        moveX = actions.ContinuousActions[0];
+        moveY = actions.ContinuousActions[1];
+        moveZ = actions.ContinuousActions[2];
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<float> contact = actionsOut.ContinuousActions;
         contact[0] = Input.GetAxisRaw("Horizontal");
-        contact[1] = Input.GetAxisRaw("Vertical");
+        contact[1] = Input.GetAxisRaw("Mouse X");
+        contact[2] = Input.GetAxisRaw("Vertical");
     }
 
     void FixedUpdate()
     {
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10f, Color.yellow);
-        int layerMask = 1 << 8;
-        layerMask = ~layerMask;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
-        {
-            if (hit.transform.gameObject.TryGetComponent<FPS>(out FPS fps))
-            {
-                Debug.Log("Hit Player!");
-                AddReward(+50f);
-                EndEpisode();
-            }
-            else
-            {
-                AddReward(-75);
-                //EndEpisode();
-            }
-        }
-        else
-        {
-            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-            //Debug.Log("Did not Hit");
-        }
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        //Hit wall
-        if (other.TryGetComponent<Wall>(out Wall wall))
-        {
-            AddReward(-75f);
-            EndEpisode();
-        }
+        CheckVision();
+        Move(moveX, moveZ);
+        Turn(moveY);
     }
 
     private void Move(float x, float z)
     {
-        transform.position += new Vector3(x, 0, z) * Time.deltaTime * moveSpeed;
+        moveToDirection = transform.forward * z + transform.right * x;
+        transform.localPosition += moveToDirection * Time.deltaTime * moveSpeed;
     }
 
     private void Turn(float y)
     {
-        transform.Rotate(0, y * rotateDirection, 0);
+        transform.Rotate(0, y, 0);
+    }
+
+    private void CheckVision()
+    {
+        RayPerceptionOutput rayOut = RayPerceptionSensor.Perceive(enemyVision.GetRayPerceptionInput());
+        int rayLength = rayOut.RayOutputs.Length;
+        for (int i = 0; i < rayLength; i++)
+        {
+            GameObject goHit = rayOut.RayOutputs[i].HitGameObject;
+            if (goHit != null)
+            {
+                var rayDirection = rayOut.RayOutputs[i].EndPositionWorld - rayOut.RayOutputs[i].StartPositionWorld;
+                var scaledRayLength = rayDirection.magnitude;
+                float rayHitDistance = rayOut.RayOutputs[i].HitFraction * scaledRayLength;
+
+                if (goHit.TryGetComponent<FPS>(out FPS fps))
+                {
+                    Debug.Log("Found Player");
+                    if (rayHitDistance <= 30f)
+                    {
+                        Debug.Log("In shooting range");
+                        floor.material = succeed;
+                        AddReward(100);
+                        EndEpisode();
+                    }
+                }
+                if (goHit.TryGetComponent<Wall>(out Wall wall))
+                {
+                    floor.material = fail;
+                    if(rayHitDistance <= 5f)
+                    {
+                        AddReward(-50f);
+                        EndEpisode();
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Wall>(out Wall wall))
+        {
+            floor.material = fail;
+            AddReward(-50f);
+            EndEpisode();        
+        }
     }
 }
