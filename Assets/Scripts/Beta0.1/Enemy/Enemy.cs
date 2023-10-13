@@ -59,11 +59,6 @@ public class Enemy : CharacterBehaviour
         if (health.isDead) Die();
     }
 
-    protected override void Attack()
-    {
-
-    }
-
     protected override void Die()
     {
         Destroy(gameObject);
@@ -74,10 +69,6 @@ public class Enemy : CharacterBehaviour
     }
 
     protected override void Move()
-    {
-    }
-
-    protected override void Run()
     {
     }
 

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CamController : MonoBehaviour
 {
-    [SerializeField] private float senX = 400f;
-    [SerializeField] private float senY = 400f;
+    // Mouse Sensitivity
+    private float senX = 400f;
+    private float senY = 400f;
 
     [SerializeField] private Transform orientation;
 
