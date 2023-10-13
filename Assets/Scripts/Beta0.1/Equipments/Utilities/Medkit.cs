@@ -39,19 +39,14 @@ public class Medkit : Equipment
             if (Input.GetMouseButtonDown(0))
             {
                 player.UseMedkit(healAmount);
-                currentMedkit--;
                 Debug.Log("Medkit is used");
                 //Destroy(gameObject);
+                currentMedkit--;
+                isUsedMedkit = true;
+                gameObject.SetActive(false);
             }
         }
-        if (currentMedkit <= 0)
-        {
-            //Debug.Log("You have no Medkit");
-            //Destroy(this.gameObject);
-            
-            SetIsUsedMedkitToTrue();
-        }
-        
+        Debug.Log("IsUseMedKit = " + IsUsedMedkit());
     }
 
     public bool IsUsedMedkit()
@@ -61,14 +56,8 @@ public class Medkit : Equipment
 
     public void SetIsUsedMedkitToFalse()
     {
-        gameObject.SetActive(true);
         isUsedMedkit = false;
+        gameObject.SetActive(true);
         currentMedkit = maxMedkit;
-    }
-
-    public void SetIsUsedMedkitToTrue()
-    {
-        gameObject.SetActive(false);
-        isUsedMedkit = true;
     }
 }
