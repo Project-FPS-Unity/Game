@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class HeavyBullet : BulletAddon
 {
-    private float heavyDamage = 10f;
-
     protected override float DamageToSet()
     {
-        return heavyDamage;
+        Bullet bullet = new Bullet("Heavy", "HeavyBullet");
+        return bullet.GetBulletDamage();
     }
 }

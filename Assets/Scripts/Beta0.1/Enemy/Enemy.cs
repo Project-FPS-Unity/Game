@@ -34,6 +34,8 @@ public class Enemy : CharacterBehaviour
     //[Header("EquipmentHolder")]
     //public EquipmentHolder holder;
 
+    private float enemyScore = 100f;
+
     private void Awake()
     {
         health = new HealthSystem(maxHealth);
@@ -61,6 +63,7 @@ public class Enemy : CharacterBehaviour
 
     protected override void Die()
     {
+        ScoreManager.scoreCount += enemyScore;
         Destroy(gameObject);
     }
 
