@@ -2,16 +2,14 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-using UnityEngine.EventSystems;
+using Unity.Mathematics;
 
 public class TestAgent : Agent
 {
     public Transform target;
-    public RayPerceptionSensorComponent3D enemyVision;
 
-    [SerializeField] private Material succeed;
-    [SerializeField] private Material fail;
-    [SerializeField] private MeshRenderer floor;
+    [SerializeField] public RayPerceptionSensorComponent3D enemyVision;
+    [SerializeField] public RayPerceptionSensorComponent3D sideVision;
 
     [SerializeField] private Rigidbody rb;
     private Vector3 moveToDirection;
@@ -22,10 +20,9 @@ public class TestAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        enemyVision = transform.GetComponent<RayPerceptionSensorComponent3D>();
-        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
-        target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
-        transform.localRotation = Quaternion.Euler(0, Random.Range(0,360), 0);
+        transform.localPosition = new Vector3(UnityEngine.Random.Range(-15f, 15f), 1.5f, UnityEngine.Random.Range(-15f, 15f));
+        target.localPosition = new Vector3(UnityEngine.Random.Range(-15f, 15f), 1.5f, UnityEngine.Random.Range(-15f, 15f));
+        transform.localRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0,360), 0);
     }
 
     //Observe
@@ -35,6 +32,17 @@ public class TestAgent : Agent
         sensor.AddObservation(transform.localPosition);
         //Observe target position
         sensor.AddObservation(target.localPosition);
+        //Observe Ray
+        RayPerceptionOutput rayOut = RayPerceptionSensor.Perceive(enemyVision.GetRayPerceptionInput());
+        for (int i = 0; i < rayOut.RayOutputs.Length; i++)
+        {
+            sensor.AddObservation(rayOut.RayOutputs[i].HitGameObject);
+        }
+        RayPerceptionOutput raySideOut = RayPerceptionSensor.Perceive(sideVision.GetRayPerceptionInput());
+        for (int i = 0; i < raySideOut.RayOutputs.Length; i++)
+        {
+            sensor.AddObservation(raySideOut.RayOutputs[i].HitGameObject);
+        }
     }
 
     //Receive action
@@ -62,13 +70,13 @@ public class TestAgent : Agent
 
     private void Move(float x, float z)
     {
-        moveToDirection = transform.forward * z + transform.right * x;
+        moveToDirection = transform.forward * math.abs(z) + transform.right * 0;
         transform.localPosition += moveToDirection * Time.deltaTime * moveSpeed;
     }
 
     private void Turn(float y)
     {
-        transform.Rotate(0, y, 0);
+        transform.Rotate(0, y * moveSpeed, 0);
     }
 
     private void CheckVision()
@@ -86,35 +94,37 @@ public class TestAgent : Agent
 
                 if (goHit.TryGetComponent<FPS>(out FPS fps))
                 {
-                    Debug.Log("Found Player");
-                    if (rayHitDistance <= 30f)
-                    {
-                        Debug.Log("In shooting range");
-                        floor.material = succeed;
-                        AddReward(100);
-                        EndEpisode();
-                    }
+                    //Debug.Log("In shooting range");
+                    AddReward(100f);
+                    EndEpisode();
                 }
+            }
+        }
+        RayPerceptionOutput raySideOut = RayPerceptionSensor.Perceive(sideVision.GetRayPerceptionInput());
+        int raySideLength = raySideOut.RayOutputs.Length;
+        for (int i = 0; i < raySideLength; i++)
+        {
+            GameObject goHit = raySideOut.RayOutputs[i].HitGameObject;
+            if (goHit != null)
+            {
+                var rayDirection = raySideOut.RayOutputs[i].EndPositionWorld - raySideOut.RayOutputs[i].StartPositionWorld;
+                var scaledRayLength = rayDirection.magnitude;
+                float rayHitDistance = raySideOut.RayOutputs[i].HitFraction * scaledRayLength;
+
+                if (goHit.TryGetComponent<FPS>(out FPS fps))
+                {
+                    AddReward(+1.5f);
+                }
+
                 if (goHit.TryGetComponent<Wall>(out Wall wall))
                 {
-                    floor.material = fail;
-                    if(rayHitDistance <= 5f)
+                    if (rayHitDistance <= 5f)
                     {
-                        AddReward(-50f);
+                        AddReward(-200f);
                         EndEpisode();
                     }
                 }
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Wall>(out Wall wall))
-        {
-            floor.material = fail;
-            AddReward(-50f);
-            EndEpisode();        
         }
     }
 }

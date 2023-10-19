@@ -1,0 +1,30 @@
+{
+    "EnemyBrain": {
+        "elo": 1194.514171010916,
+        "checkpoints": [
+            {
+                "steps": 36926,
+                "file_path": "results\\EnemyTurn2\\EnemyBrain\\EnemyBrain-36926.onnx",
+                "reward": 6447.916666666667,
+                "creation_time": 1697731476.3652282,
+                "auxillary_file_paths": [
+                    "results\\EnemyTurn2\\EnemyBrain\\EnemyBrain-36926.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 36926,
+            "file_path": "results\\EnemyTurn2\\EnemyBrain.onnx",
+            "reward": 6447.916666666667,
+            "creation_time": 1697731476.3652282,
+            "auxillary_file_paths": [
+                "results\\EnemyTurn2\\EnemyBrain\\EnemyBrain-36926.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.0+cu121"
+    }
+}

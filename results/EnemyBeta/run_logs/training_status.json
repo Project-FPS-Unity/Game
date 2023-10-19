@@ -1,0 +1,66 @@
+{
+    "EnemyBrain": {
+        "checkpoints": [
+            {
+                "steps": 349993,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-349993.onnx",
+                "reward": 917.452380952381,
+                "creation_time": 1697736526.922223,
+                "auxillary_file_paths": [
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-349993.pt"
+                ]
+            },
+            {
+                "steps": 399986,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-399986.onnx",
+                "reward": 1043.0576923076924,
+                "creation_time": 1697736723.7580018,
+                "auxillary_file_paths": [
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-399986.pt"
+                ]
+            },
+            {
+                "steps": 449977,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-449977.onnx",
+                "reward": 848.2615384615384,
+                "creation_time": 1697736925.7087703,
+                "auxillary_file_paths": [
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-449977.pt"
+                ]
+            },
+            {
+                "steps": 499952,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-499952.onnx",
+                "reward": 638.0,
+                "creation_time": 1697737120.4026487,
+                "auxillary_file_paths": [
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-499952.pt"
+                ]
+            },
+            {
+                "steps": 500011,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-500011.onnx",
+                "reward": 813.5,
+                "creation_time": 1697737120.580652,
+                "auxillary_file_paths": [
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-500011.pt"
+                ]
+            }
+        ],
+        "elo": 221.7561125197141,
+        "final_checkpoint": {
+            "steps": 500011,
+            "file_path": "results\\EnemyBeta\\EnemyBrain.onnx",
+            "reward": 813.5,
+            "creation_time": 1697737120.580652,
+            "auxillary_file_paths": [
+                "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-500011.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.0+cu121"
+    }
+}

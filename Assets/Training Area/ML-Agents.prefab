@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2527884282186791899}
   - component: {fileID: 5077378786351444532}
   - component: {fileID: 7155948791853638034}
+  - component: {fileID: 5150602057894135243}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -241,7 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 6
+    VectorObservationSize: 98
     NumStackedVectorObservations: 3
     m_ActionSpec:
       m_NumContinuousActions: 3
@@ -275,11 +276,9 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 6000
   target: {fileID: 464561562942396578}
-  enemyVision: {fileID: 0}
-  succeed: {fileID: 2100000, guid: 2be9a975b5459df4d861b4fb66d2aae3, type: 2}
-  fail: {fileID: 2100000, guid: 4de3f8a24e9b8fc4f9865e249d88f0fe, type: 2}
-  floor: {fileID: 234198619975244114}
-  rb: {fileID: 0}
+  enemyVision: {fileID: 7155948791853638034}
+  sideVision: {fileID: 5150602057894135243}
+  rb: {fileID: 5077378786351444532}
 --- !u!114 &2527884282186791899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,18 +333,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: EnemyVision
-  m_DetectableTags:
-  - Player
+  m_DetectableTags: []
   m_RaysPerDirection: 15
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 50
+  m_RayLength: 30
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0.07898478, b: 0, a: 1}
   rayMissColor: {r: 1, g: 0.96657693, b: 0, a: 1}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
+--- !u!114 &5150602057894135243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820224553174200196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: SideVision
+  m_DetectableTags: []
+  m_RaysPerDirection: 30
+  m_MaxRayDegrees: 180
+  m_SphereCastRadius: 0.5
+  m_RayLength: 40
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
 --- !u!1 &1559915131126983328
@@ -565,7 +589,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -683,7 +707,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1009,7 +1033,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1982,7 +2006,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
