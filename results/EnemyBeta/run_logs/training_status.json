@@ -2,59 +2,59 @@
     "EnemyBrain": {
         "checkpoints": [
             {
-                "steps": 349993,
-                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-349993.onnx",
-                "reward": 917.452380952381,
-                "creation_time": 1697736526.922223,
+                "steps": 99988,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-99988.onnx",
+                "reward": 100.0,
+                "creation_time": 1697744611.5033038,
                 "auxillary_file_paths": [
-                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-349993.pt"
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-99988.pt"
                 ]
             },
             {
-                "steps": 399986,
-                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-399986.onnx",
-                "reward": 1043.0576923076924,
-                "creation_time": 1697736723.7580018,
+                "steps": 149996,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-149996.onnx",
+                "reward": 99.18032786885246,
+                "creation_time": 1697744876.275843,
                 "auxillary_file_paths": [
-                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-399986.pt"
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-149996.pt"
                 ]
             },
             {
-                "steps": 449977,
-                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-449977.onnx",
-                "reward": 848.2615384615384,
-                "creation_time": 1697736925.7087703,
+                "steps": 199966,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-199966.onnx",
+                "reward": 100.0,
+                "creation_time": 1697745154.4139187,
                 "auxillary_file_paths": [
-                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-449977.pt"
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-199966.pt"
                 ]
             },
             {
-                "steps": 499952,
-                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-499952.onnx",
-                "reward": 638.0,
-                "creation_time": 1697737120.4026487,
+                "steps": 249949,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-249949.onnx",
+                "reward": 100.0,
+                "creation_time": 1697745472.4358716,
                 "auxillary_file_paths": [
-                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-499952.pt"
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-249949.pt"
                 ]
             },
             {
-                "steps": 500011,
-                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-500011.onnx",
-                "reward": 813.5,
-                "creation_time": 1697737120.580652,
+                "steps": 270049,
+                "file_path": "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-270049.onnx",
+                "reward": 100.0,
+                "creation_time": 1697745616.830895,
                 "auxillary_file_paths": [
-                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-500011.pt"
+                    "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-270049.pt"
                 ]
             }
         ],
-        "elo": 221.7561125197141,
+        "elo": 1152.077070792427,
         "final_checkpoint": {
-            "steps": 500011,
+            "steps": 270049,
             "file_path": "results\\EnemyBeta\\EnemyBrain.onnx",
-            "reward": 813.5,
-            "creation_time": 1697737120.580652,
+            "reward": 100.0,
+            "creation_time": 1697745616.830895,
             "auxillary_file_paths": [
-                "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-500011.pt"
+                "results\\EnemyBeta\\EnemyBrain\\EnemyBrain-270049.pt"
             ]
         }
     },

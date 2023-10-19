@@ -32,17 +32,6 @@ public class TestAgent : Agent
         sensor.AddObservation(transform.localPosition);
         //Observe target position
         sensor.AddObservation(target.localPosition);
-        //Observe Ray
-        RayPerceptionOutput rayOut = RayPerceptionSensor.Perceive(enemyVision.GetRayPerceptionInput());
-        for (int i = 0; i < rayOut.RayOutputs.Length; i++)
-        {
-            sensor.AddObservation(rayOut.RayOutputs[i].HitGameObject);
-        }
-        RayPerceptionOutput raySideOut = RayPerceptionSensor.Perceive(sideVision.GetRayPerceptionInput());
-        for (int i = 0; i < raySideOut.RayOutputs.Length; i++)
-        {
-            sensor.AddObservation(raySideOut.RayOutputs[i].HitGameObject);
-        }
     }
 
     //Receive action
@@ -95,7 +84,7 @@ public class TestAgent : Agent
                 if (goHit.TryGetComponent<FPS>(out FPS fps))
                 {
                     //Debug.Log("In shooting range");
-                    AddReward(100f);
+                    AddReward(+100f);
                     EndEpisode();
                 }
             }
@@ -113,7 +102,7 @@ public class TestAgent : Agent
 
                 if (goHit.TryGetComponent<FPS>(out FPS fps))
                 {
-                    AddReward(+1.5f);
+                    //AddReward(+0.5f);
                 }
 
                 if (goHit.TryGetComponent<Wall>(out Wall wall))
