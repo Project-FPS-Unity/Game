@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class RifleBullet : BulletAddon
 {
-    private float rifleDamage = 2f;
-
     protected override float DamageToSet()
     {
-        return rifleDamage;
+        Bullet bullet = new Bullet("Rifle", "RifleBullet");
+        return bullet.GetBulletDamage();
     }
 }
