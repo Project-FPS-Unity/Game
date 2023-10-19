@@ -12,30 +12,51 @@ public class Rifle : Equipment
     [Header("Settings")]
     [SerializeField] private float fireCooldown;
     private int maxAmmo = 100;
-    private int currentAmmo;
+    private Bullet bullet;
+    private float reloadTime = 1f;
 
     [Header("Throwing")]
     [SerializeField] private float bulletForce;
     [SerializeField] private float bulletUpwardForce;
     private bool readyToFire;
 
+    private void Awake()
+    {
+        bullet = new Bullet("Rifle", "RifleBullet");
+    }
+
     protected override void Action()
     {
-        if (Input.GetMouseButton(0) && readyToFire && currentAmmo > 0)
+        if (Input.GetMouseButton(0) && readyToFire && bullet.GetCurrentBullet() > 0)
         {
             FireBullet();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
+            return;
         }
     }
 
     protected override void InitAmmo()
     {
         readyToFire = true;
-        currentAmmo = maxAmmo;
+        bullet.SetCurrentBullet(maxAmmo);
     }
 
     protected override IEnumerator Reload()
     {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(reloadTime);
+        readyToFire = true;
+        if (bullet.GetSpareBullet() > 0)
+        {
+            int difBullet = maxAmmo - bullet.GetCurrentBullet(); ;
+            if (difBullet < 100)
+            {
+                bullet.SetCurrentBullet(bullet.GetCurrentBullet() + difBullet);
+                bullet.SetSpareBullet(bullet.GetSpareBullet() - difBullet);
+            }
+        }
     }
 
     private void FireBullet()
@@ -61,7 +82,10 @@ public class Rifle : Equipment
 
         projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
 
-        currentAmmo--;
+        bullet.SetCurrentBullet(bullet.GetCurrentBullet() - 1);
+
+        MagazineUI.frontMagazine = bullet.GetCurrentBullet();
+        MagazineUI.backMagazine = bullet.GetSpareBullet();
 
         // Implement throw cooldown
         Invoke(nameof(ReadyToFire), fireCooldown);

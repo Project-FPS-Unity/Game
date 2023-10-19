@@ -27,6 +27,7 @@ public class PlayerScript : CharacterBehaviour
     [Header("Ground Check")]
     [SerializeField] private float playerHeight = 2f;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsWater;
     private bool grounded;
 
     [Header("Transform")]
@@ -36,13 +37,10 @@ public class PlayerScript : CharacterBehaviour
     private Vector3 moveDirection;
     private Rigidbody rb;
 
-    [Header("EquipmentHolder")]
-    [SerializeField] private EquipmentHolder holder;
-
     [Header("Interact Message")]
     [SerializeField] private Camera cam;
     [SerializeField] private float distance = 3f;
-    [SerializeField] private LayerMask mask;
+    [SerializeField] private LayerMask interactMask;
     [SerializeField] private TextMeshProUGUI promptText;
 
     private void Awake()
@@ -74,7 +72,11 @@ public class PlayerScript : CharacterBehaviour
 
         GetInput();
         SpeedLimit();
-        if (grounded) rb.drag = groundDrag;
+        if (grounded)
+        {
+            rb.drag = groundDrag;
+            Debug.Log("Grounded");
+        }
         else rb.drag = 0;
 
         // Interact Check
@@ -82,11 +84,6 @@ public class PlayerScript : CharacterBehaviour
     }
 
     // Inherited Function
-    protected override void Attack()
-    {
-
-    }
-
     protected override void Interact()
     {
         UpdateInteractText();
@@ -97,23 +94,22 @@ public class PlayerScript : CharacterBehaviour
         //Move to cam direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         //Add force
-        if (grounded && isRunning == false)
+        if (grounded && !isRunning)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force); //on ground
         }
-        else if (grounded && isRunning == true)
+        else if (grounded && isRunning)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 15f, ForceMode.Force); //on ground
+            rb.AddForce(moveDirection.normalized * moveSpeed * 40f, ForceMode.Force); //on ground
         }
-        else if (!grounded)
+        else if (!grounded && !isRunning)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force); //in air
         }
-    }
-
-    protected override void Run()
-    {
-
+        else if (!grounded && isRunning)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 40f * airMultiplier, ForceMode.Force); //in air
+        }
     }
 
     protected override void Jump()
@@ -135,11 +131,22 @@ public class PlayerScript : CharacterBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
+        // Get Jump Input
         if (Input.GetKeyDown(KeyCode.Space) && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        // Get Sprint Input
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isRunning = true;
+        }
+        else
+        {
+            isRunning = false;
         }
     }
 
@@ -234,7 +241,7 @@ public class PlayerScript : CharacterBehaviour
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * distance);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, distance, mask))
+        if (Physics.Raycast(ray, out hitInfo, distance, interactMask))
         {
             if (hitInfo.collider.GetComponent<Interactable>() != null)
             {
