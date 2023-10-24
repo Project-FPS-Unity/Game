@@ -10,15 +10,16 @@ public class BetaAgent : Agent
 
     [SerializeField] public RayPerceptionSensorComponent3D frontRay;
     [SerializeField] public RayPerceptionSensorComponent3D sideRay;
-
     private Vector3 moveToDirection;
     private float moveX;
     private float moveY;
     private float moveZ;
     private float moveSpeed = 8f;
+    private bool isCombat = false;
 
     public override void OnEpisodeBegin()
     {
+        isCombat = false;
         transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
         target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
         transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
@@ -26,9 +27,11 @@ public class BetaAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(transform.localRotation);
-        sensor.AddObservation(target.transform.localPosition - transform.localPosition);
+        sensor.AddObservation(Vector3.Normalize(transform.localPosition));
+        sensor.AddObservation(Quaternion.Normalize(transform.localRotation));
+
+        sensor.AddObservation(Vector3.Normalize(target.transform.localPosition));
+        sensor.AddObservation(Vector3.Normalize(transform.localPosition - target.transform.localPosition));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -36,6 +39,18 @@ public class BetaAgent : Agent
         moveX = actions.ContinuousActions[0];
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
+
+        CheckRay();
+        Turn(moveY);
+
+        if (!isCombat)
+        {
+            Move(moveZ);
+        }
+        else
+        {
+            InCombat();
+        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -46,24 +61,23 @@ public class BetaAgent : Agent
         contact[2] = Input.GetAxisRaw("Vertical");
     }
 
-    private void FixedUpdate()
-    {
-        CheckRay();
-        Move(moveX, moveZ);
-        Turn(moveY);
-    }
-
     //---------------------------------------------------------------------//
 
     private void GetReward(int number)
     {
         switch (number)
         {
-            case 0: //Hitwall
-                AddReward(-200f);
+            case 0: //Walk backward or Struggle aim
+                AddReward(-0.2f);
                 break;
-            case 1: //Found Player
-                AddReward(+150f);
+            case 1: //Hitwall
+                AddReward(-0.5f);
+                break;
+            case 2: //Found Player
+                AddReward(+0.1f);
+                break;
+            case 3: //Shoot
+                AddReward(+0.5f);
                 break;
             default:
                 // code block
@@ -71,15 +85,37 @@ public class BetaAgent : Agent
         }
     }
 
-    private void Move(float x, float z)
+    private void Move(float z)
     {
-        moveToDirection = transform.forward * z + transform.right * x;
+        moveToDirection = transform.forward * z;
+        if (z < 0) GetReward(0);
         transform.localPosition += moveToDirection * Time.deltaTime * moveSpeed;
     }
 
     private void Turn(float y)
     {
         transform.Rotate(0, y * moveSpeed, 0);
+    }
+
+    private void InCombat()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward * 30, Color.green);
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 35f))
+        {
+            if (hit.transform.gameObject.GetComponent<FPS>())
+            {
+                Shoot();
+            }
+            
+        }
+    }
+
+    private void Shoot()
+    {                
+        Debug.Log("Did Hit");
+        GetReward(3);
+        EndEpisode();
     }
 
     private void CheckRay()
@@ -98,8 +134,8 @@ public class BetaAgent : Agent
 
                 if (goHit.TryGetComponent<FPS>(out FPS fps))
                 {
-                    GetReward(1);
-                    EndEpisode();
+                    GetReward(2);
+                    isCombat = true;
                 }
             }
         }
@@ -118,7 +154,7 @@ public class BetaAgent : Agent
 
                 if (goHit.TryGetComponent<Wall>(out Wall wall))
                 {
-                    GetReward(0);
+                    GetReward(1);
                     EndEpisode();
                 }
             }
