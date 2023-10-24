@@ -6,7 +6,11 @@ public class SeeName : Interactable
 {
     protected override void Interact()
     {
+        InteractToSeeName();
+    }
+
+    private void InteractToSeeName()
+    {
         Debug.Log("Interact with " + gameObject.name);
-        Destroy(gameObject);
     }
 }

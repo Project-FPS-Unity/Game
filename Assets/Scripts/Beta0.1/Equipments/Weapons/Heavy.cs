@@ -2,52 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heavy : Equipment
+public class Heavy : Gun
 {
-    [Header("Camara")]
-    [SerializeField] private Camera fpsCam;
-    [Header("Gun Details")]
-
-    [Header("VFX")]
     [SerializeField] private ParticleSystem muzzleFlash;
-
-    private float reloadTime = 1f;
-    private bool isReloading = false;
-
-    //Animation
-    private Animator animator;
-
-    [Header("Reference")]
-    [SerializeField] private Transform cam;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private GameObject objectToFire;
-
-    [Header("Settings")]
-    [SerializeField] private float fireCooldown;
-    private int maxAmmo = 100;
-    private int currentAmmo;
-
-    [Header("Throwing")]
-    [SerializeField] private float bulletForce;
-    [SerializeField] private float bulletUpwardForce;
-    private bool readyToFire;
-
-    private void OnEnable()
-    {
-        isReloading = false;
-    }
-
-    private void Start()
-    {
-        animator = GetComponentInParent<Animator>();
-    }
-
-    // Override
-    protected override void Action()
-    {
-        if (isReloading) return;
-        CheckShoot();
-    }
+    private int maxAmmo = 30;
+    private int spareBullet = 60;
+    /*
     protected override IEnumerator Reload()
     {
         isReloading = true;
@@ -57,72 +17,19 @@ public class Heavy : Equipment
         animator.SetBool("isReload", false);
         isReloading = false;
     }
-
-    protected override void InitAmmo()
+    */
+    protected override Bullet SetAmmoCapacity()
     {
-        readyToFire = true;
-        currentAmmo = maxAmmo;
+        return new Bullet(maxAmmo, spareBullet);
     }
 
-    // Equipment Action
-    private void Shoot()
+    protected override void FireAnimation()
     {
-        muzzleFlash.Play();
-        FireBullet();
+        throw new System.NotImplementedException();
     }
 
-    private void CheckShoot()
+    protected override void ReloadAnimation()
     {
-        if (currentAmmo <= 0)
-        {
-            StartCoroutine(Reload());
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(Reload());
-            return;
-        }
-
-        if (Input.GetMouseButton(0) && readyToFire && currentAmmo > 0)
-        {
-            Debug.Log("Fire!");
-            Shoot();
-        }
-    }
-
-    private void FireBullet()
-    {
-        readyToFire = false;
-
-        // Insatantiate object to throw
-        GameObject projectile = Instantiate(objectToFire, attackPoint.position, cam.rotation);
-
-        // Get Rigidbody componenet
-        Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-
-        // Calculate direction
-        Vector3 forceDirection = cam.transform.forward;
-        RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, 500f))
-        {
-            forceDirection = (hit.point - attackPoint.position).normalized;
-        }
-
-        // Add Force
-        Vector3 forceToAdd = forceDirection * bulletForce + transform.up * bulletUpwardForce;
-
-        projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
-
-        currentAmmo--;
-
-        // Implement throw cooldown
-        Invoke(nameof(ResetFire), fireCooldown);
-    }
-
-    private void ResetFire()
-    {
-        readyToFire = true;
+        throw new System.NotImplementedException();
     }
 }

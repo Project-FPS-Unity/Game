@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5227014494409666887}
-  - component: {fileID: 6329553531740827165}
   - component: {fileID: 5622441606005222740}
+  - component: {fileID: 4076470026051026946}
   m_Layer: 0
   m_Name: Heavy
   m_TagString: Untagged
@@ -41,26 +41,6 @@ Transform:
   - {fileID: 4226666348984901386}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6329553531740827165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282182170271528527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d01f5234f2270447bd4e254af83a514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fpsCam: {fileID: 0}
-  muzzleFlash: {fileID: 7198928563457643830}
-  cam: {fileID: 0}
-  attackPoint: {fileID: 8484660442785028241}
-  objectToFire: {fileID: 3150825420721219469, guid: e6802c200f7135f47910653b976f9e17, type: 3}
-  fireCooldown: 0.1
-  bulletForce: 1
-  bulletUpwardForce: 0
 --- !u!95 &5622441606005222740
 Animator:
   serializedVersion: 5
@@ -82,6 +62,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4076470026051026946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282182170271528527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d01f5234f2270447bd4e254af83a514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  attackPoint: {fileID: 8484660442785028241}
+  objectToFire: {fileID: 3150825420721219469, guid: e6802c200f7135f47910653b976f9e17, type: 3}
+  magazineUI: {fileID: 0}
+  fireCooldown: 0
+  bulletForce: 0
+  bulletUpwardForce: 0
+  muzzleFlash: {fileID: 0}
 --- !u!1 &2965342573196889691
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8484660442785028241}
   m_Layer: 0
-  m_Name: PointToFire
+  m_Name: HeavyPointToFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

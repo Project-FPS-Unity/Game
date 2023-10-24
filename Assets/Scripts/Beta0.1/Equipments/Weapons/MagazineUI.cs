@@ -10,7 +10,7 @@ public class MagazineUI : MonoBehaviour
     public static int backMagazine;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         MagazineTextUpdater();
         //InvokeRepeating("MagazineTextUpdater", 0, 1);

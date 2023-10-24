@@ -20,7 +20,7 @@ public class Medkit : Equipment
     {
         UseMedkit();
     }
-    protected override void InitAmmo()
+    protected override void InitValue()
     {
         SetIsUsedMedkitToFalse();
     }

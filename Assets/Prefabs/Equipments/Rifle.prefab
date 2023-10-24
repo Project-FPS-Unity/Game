@@ -5074,7 +5074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6167364838399105268}
   m_Layer: 0
-  m_Name: PointToFire
+  m_Name: RiflePointToFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5317,9 +5317,11 @@ MonoBehaviour:
   cam: {fileID: 0}
   attackPoint: {fileID: 6167364838399105268}
   objectToFire: {fileID: 963122531031739792, guid: 8a614b8676a69b943b6ad000caca7e24, type: 3}
+  magazineUI: {fileID: 0}
   fireCooldown: 0.1
   bulletForce: 4
   bulletUpwardForce: 0
+  muzzleFlash: {fileID: 0}
 --- !u!1 &6068746840321559058
 GameObject:
   m_ObjectHideFlags: 0
