@@ -11,6 +11,7 @@ public class BetaAgent : Agent
     [SerializeField] public RayPerceptionSensorComponent3D frontRay;
     [SerializeField] public RayPerceptionSensorComponent3D sideRay;
     private Vector3 moveToDirection;
+    private Vector3 EnemyDirection;
     private float moveX;
     private float moveY;
     private float moveZ;
@@ -31,6 +32,7 @@ public class BetaAgent : Agent
         sensor.AddObservation(Quaternion.Normalize(transform.localRotation));
 
         sensor.AddObservation(Vector3.Normalize(target.transform.localPosition));
+        sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
         sensor.AddObservation(Vector3.Normalize(transform.localPosition - target.transform.localPosition));
     }
 
@@ -40,11 +42,11 @@ public class BetaAgent : Agent
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
 
-        CheckRay();
         Turn(moveY);
 
         if (!isCombat)
         {
+            CheckRay();
             Move(moveZ);
         }
         else
@@ -68,7 +70,7 @@ public class BetaAgent : Agent
         switch (number)
         {
             case 0: //Walk backward or Struggle aim
-                AddReward(-0.2f);
+                AddReward(-0.1f);
                 break;
             case 1: //Hitwall
                 AddReward(-0.5f);
@@ -107,13 +109,11 @@ public class BetaAgent : Agent
             {
                 Shoot();
             }
-            
         }
     }
 
     private void Shoot()
     {                
-        Debug.Log("Did Hit");
         GetReward(3);
         EndEpisode();
     }
@@ -128,8 +128,8 @@ public class BetaAgent : Agent
             GameObject goHit = frontOut.RayOutputs[i].HitGameObject;
             if (goHit != null)
             {
-                var rayDirection = frontOut.RayOutputs[i].EndPositionWorld - frontOut.RayOutputs[i].StartPositionWorld;
-                var scaledRayLength = rayDirection.magnitude;
+                var EnemyDirection = frontOut.RayOutputs[i].EndPositionWorld - frontOut.RayOutputs[i].StartPositionWorld;
+                var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
 
                 if (goHit.TryGetComponent<FPS>(out FPS fps))

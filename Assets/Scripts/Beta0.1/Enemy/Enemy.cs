@@ -67,9 +67,7 @@ public class Enemy : CharacterBehaviour
         Destroy(gameObject);
     }
 
-    protected override void Interact()
-    {
-    }
+
 
     protected override void Move()
     {
@@ -103,5 +101,10 @@ public class Enemy : CharacterBehaviour
             Vector3 limitVelocity = flatVelocity.normalized * moveSpeed;
             rb.velocity = new Vector3(limitVelocity.x, rb.velocity.y, limitVelocity.z);
         }
+    }
+
+    protected override void Interact()
+    {
+        
     }
 }
