@@ -1,0 +1,48 @@
+{
+    "BetaBrain": {
+        "checkpoints": [
+            {
+                "steps": 49987,
+                "file_path": "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-49987.onnx",
+                "reward": 1530.4497909545898,
+                "creation_time": 1699777107.503172,
+                "auxillary_file_paths": [
+                    "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-49987.pt"
+                ]
+            },
+            {
+                "steps": 99976,
+                "file_path": "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-99976.onnx",
+                "reward": 737.5428849628994,
+                "creation_time": 1699777254.5203838,
+                "auxillary_file_paths": [
+                    "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-99976.pt"
+                ]
+            },
+            {
+                "steps": 102891,
+                "file_path": "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-102891.onnx",
+                "reward": 493.68335485458374,
+                "creation_time": 1699777270.2657635,
+                "auxillary_file_paths": [
+                    "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-102891.pt"
+                ]
+            }
+        ],
+        "elo": 1200.161763362593,
+        "final_checkpoint": {
+            "steps": 102891,
+            "file_path": "results\\BetaV2_V1M\\BetaBrain.onnx",
+            "reward": 493.68335485458374,
+            "creation_time": 1699777270.2657635,
+            "auxillary_file_paths": [
+                "results\\BetaV2_V1M\\BetaBrain\\BetaBrain-102891.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.0+cu121"
+    }
+}

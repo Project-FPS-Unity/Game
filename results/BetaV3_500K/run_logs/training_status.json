@@ -1,0 +1,66 @@
+{
+    "BetaBrain": {
+        "checkpoints": [
+            {
+                "steps": 349991,
+                "file_path": "results\\BetaV3_500K\\BetaBrain\\BetaBrain-349991.onnx",
+                "reward": 0.6238095345951262,
+                "creation_time": 1699778933.578687,
+                "auxillary_file_paths": [
+                    "results\\BetaV3_500K\\BetaBrain\\BetaBrain-349991.pt"
+                ]
+            },
+            {
+                "steps": 399989,
+                "file_path": "results\\BetaV3_500K\\BetaBrain\\BetaBrain-399989.onnx",
+                "reward": 0.6058823664983114,
+                "creation_time": 1699779188.0229194,
+                "auxillary_file_paths": [
+                    "results\\BetaV3_500K\\BetaBrain\\BetaBrain-399989.pt"
+                ]
+            },
+            {
+                "steps": 449993,
+                "file_path": "results\\BetaV3_500K\\BetaBrain\\BetaBrain-449993.onnx",
+                "reward": 0.6060810933342656,
+                "creation_time": 1699779456.405625,
+                "auxillary_file_paths": [
+                    "results\\BetaV3_500K\\BetaBrain\\BetaBrain-449993.pt"
+                ]
+            },
+            {
+                "steps": 499995,
+                "file_path": "results\\BetaV3_500K\\BetaBrain\\BetaBrain-499995.onnx",
+                "reward": 0.6192307798908308,
+                "creation_time": 1699779726.629733,
+                "auxillary_file_paths": [
+                    "results\\BetaV3_500K\\BetaBrain\\BetaBrain-499995.pt"
+                ]
+            },
+            {
+                "steps": 500002,
+                "file_path": "results\\BetaV3_500K\\BetaBrain\\BetaBrain-500002.onnx",
+                "reward": 0.6196202637651299,
+                "creation_time": 1699779726.8199668,
+                "auxillary_file_paths": [
+                    "results\\BetaV3_500K\\BetaBrain\\BetaBrain-500002.pt"
+                ]
+            }
+        ],
+        "elo": 1220.5851066343905,
+        "final_checkpoint": {
+            "steps": 500002,
+            "file_path": "results\\BetaV3_500K\\BetaBrain.onnx",
+            "reward": 0.6196202637651299,
+            "creation_time": 1699779726.8199668,
+            "auxillary_file_paths": [
+                "results\\BetaV3_500K\\BetaBrain\\BetaBrain-500002.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.0+cu121"
+    }
+}
