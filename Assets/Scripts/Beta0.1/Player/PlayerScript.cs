@@ -75,7 +75,7 @@ public class PlayerScript : CharacterBehaviour
         if (grounded)
         {
             rb.drag = groundDrag;
-            Debug.Log("Grounded");
+            //Debug.Log("Grounded");
         }
         else rb.drag = 0;
 

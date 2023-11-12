@@ -10,6 +10,7 @@ public class BetaAgent : Agent
 
     [SerializeField] public RayPerceptionSensorComponent3D frontRay;
     [SerializeField] public RayPerceptionSensorComponent3D sideRay;
+    [SerializeField] private PlayerScript player;
     private Vector3 moveToDirection;
     private Vector3 EnemyDirection;
     private float moveX;
@@ -20,10 +21,11 @@ public class BetaAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        player = GetComponent<PlayerScript>();
         isCombat = false;
-        transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        //target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -105,9 +107,12 @@ public class BetaAgent : Agent
         Debug.DrawRay(transform.position, transform.forward * 30, Color.green);
         if (Physics.Raycast(transform.position, transform.forward, out hit, 35f))
         {
-            if (hit.transform.gameObject.GetComponent<FPS>())
+            if (hit.transform.gameObject.GetComponent<PlayerScript>())
             {
-                Shoot();
+                var doDamage = hit.transform.gameObject.GetComponent<PlayerScript>();
+                doDamage.TakeDamage(1);
+                Shoot();                               
+                //player.TakeDamage(1);
             }
         }
     }
@@ -132,7 +137,7 @@ public class BetaAgent : Agent
                 var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
 
-                if (goHit.TryGetComponent<FPS>(out FPS fps))
+                if (goHit.TryGetComponent<PlayerScript>(out PlayerScript playerScript))
                 {
                     GetReward(2);
                     isCombat = true;
