@@ -83,6 +83,9 @@ public class BetaAgent : Agent
             case 3: //Shoot
                 AddReward(+0.5f);
                 break;
+            case 4: //Player Die
+                AddReward(+0.75f);
+                break;
             default:
                 // code block
                 break;
@@ -111,8 +114,12 @@ public class BetaAgent : Agent
             {
                 var doDamage = hit.transform.gameObject.GetComponent<PlayerScript>();
                 doDamage.TakeDamage(1);
-                Shoot();                               
-                //player.TakeDamage(1);
+                Shoot();
+                if (doDamage.CheckDead())
+                {
+                    GetReward(4);
+                    EndEpisode();
+                }
             }
         }
     }
@@ -120,7 +127,6 @@ public class BetaAgent : Agent
     private void Shoot()
     {                
         GetReward(3);
-        EndEpisode();
     }
 
     private void CheckRay()
