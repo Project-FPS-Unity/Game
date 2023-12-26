@@ -57,7 +57,7 @@ public class Enemy : CharacterBehaviour
     {
         //Health Check
         health.CheckHealth();
-        healthBar.SetHealth(health.CheckHealth());
+        healthBar.SetHealth(health.GetCurrentHealth());
         if (health.isDead) Die();
     }
 
