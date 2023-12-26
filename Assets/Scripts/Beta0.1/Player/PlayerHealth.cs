@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image frontHealthBar;
     [SerializeField] private Image backHealthBar;
     [SerializeField] private TextMeshProUGUI healthText;
-    private HealthSystem health;
+    public static HealthSystem health;
     private float maxHealth = 100f;
     private bool isHit = false;
     private bool isUsedMedkit = false;

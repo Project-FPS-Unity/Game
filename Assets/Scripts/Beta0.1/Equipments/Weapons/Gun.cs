@@ -26,6 +26,11 @@ public abstract class Gun : Equipment
         bullet = SetAmmoCapacity();
     }
 
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
+
     protected override void Action()
     {
         GetKeyToAction();
@@ -53,6 +58,7 @@ public abstract class Gun : Equipment
         yield return new WaitForSeconds(reloadTime);
         canReload = true;
         readyToFire = true;
+        UpdateUI();
     }
 
     private void GetKeyToAction()
@@ -94,8 +100,7 @@ public abstract class Gun : Equipment
 
         bullet.SetCurrentBullet(bullet.GetCurrentBullet() - 1);
 
-        MagazineUI.frontMagazine = bullet.GetCurrentBullet();
-        MagazineUI.backMagazine = bullet.GetSpareBullet();
+        UpdateUI();
 
         // Implement throw cooldown
         Invoke(nameof(ReadyToFire), fireCooldown);
@@ -103,6 +108,12 @@ public abstract class Gun : Equipment
     private void ReadyToFire()
     {
         readyToFire = true;
+    }
+
+    private void UpdateUI()
+    {
+        MagazineUI.frontMagazine = bullet.GetCurrentBullet();
+        MagazineUI.backMagazine = bullet.GetSpareBullet();
     }
 
     protected abstract Bullet SetAmmoCapacity();

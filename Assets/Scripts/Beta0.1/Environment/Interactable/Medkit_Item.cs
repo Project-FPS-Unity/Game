@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Medkit_Item : Interactable
 {
-    [SerializeField] private Medkit medkit;
+    //[SerializeField] private Medkit medkit;
     protected override void Interact()
     {
         PickUpMedkit();
@@ -13,7 +13,7 @@ public class Medkit_Item : Interactable
     private void PickUpMedkit()
     {
         Debug.Log("You get one Medkit");
-        medkit.SetIsUsedMedkitToFalse();
+        Medkit.currentMedkit += 1;
         Destroy(gameObject);
     }
 }
