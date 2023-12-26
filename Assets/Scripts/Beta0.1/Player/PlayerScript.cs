@@ -82,7 +82,7 @@ public class PlayerScript : CharacterBehaviour
         else rb.drag = 0;
 
         // Interact Check
-        Interact();
+        //Interact();
     }
 
     // Inherited Function
@@ -179,7 +179,7 @@ public class PlayerScript : CharacterBehaviour
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        UpdateHealthUI();
+        //UpdateHealthUI();
         // Test Damage and Heal System
         if (Input.GetKeyDown(KeyCode.F))
         {

@@ -20,12 +20,11 @@ public class BetaAgent : Agent
     private bool isCombat = false;
 
     public override void OnEpisodeBegin()
-    {
-        player = GetComponent<PlayerScript>();
+    {       
         isCombat = false;
-        //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -45,10 +44,10 @@ public class BetaAgent : Agent
         moveZ = actions.ContinuousActions[2];
 
         Turn(moveY);
+        CheckRay();
 
         if (!isCombat)
         {
-            CheckRay();
             Move(moveZ);
         }
         else
@@ -77,13 +76,10 @@ public class BetaAgent : Agent
             case 1: //Hitwall
                 AddReward(-0.5f);
                 break;
-            case 2: //Found Player
-                AddReward(+0.1f);
-                break;
-            case 3: //Shoot
+            case 2: //Shoot
                 AddReward(+0.5f);
                 break;
-            case 4: //Player Die
+            case 3: //Player Die
                 AddReward(+0.75f);
                 break;
             default:
@@ -112,12 +108,13 @@ public class BetaAgent : Agent
         {
             if (hit.transform.gameObject.GetComponent<PlayerScript>())
             {
-                var doDamage = hit.transform.gameObject.GetComponent<PlayerScript>();
-                doDamage.TakeDamage(1);
+                var playerHealth = hit.transform.gameObject.GetComponent<PlayerScript>();
+                playerHealth.TakeDamage(1);
                 Shoot();
-                if (doDamage.CheckDead())
-                {
-                    GetReward(4);
+                if (playerHealth.CheckDead())
+                {                    
+                    GetReward(3);
+                    Debug.Log("Player Defeated");
                     EndEpisode();
                 }
             }
@@ -126,7 +123,7 @@ public class BetaAgent : Agent
 
     private void Shoot()
     {                
-        GetReward(3);
+        GetReward(2);
     }
 
     private void CheckRay()
@@ -134,9 +131,14 @@ public class BetaAgent : Agent
         //Front vision
         RayPerceptionOutput frontOut = RayPerceptionSensor.Perceive(frontRay.GetRayPerceptionInput());
         int rayFrontLength = frontOut.RayOutputs.Length;
+        bool playerFound = false;
         for (int i = 0; i < rayFrontLength; i++)
         {
             GameObject goHit = frontOut.RayOutputs[i].HitGameObject;
+            if (goHit == null && isCombat)
+            {
+                isCombat = false;
+            }
             if (goHit != null)
             {
                 var EnemyDirection = frontOut.RayOutputs[i].EndPositionWorld - frontOut.RayOutputs[i].StartPositionWorld;
@@ -145,8 +147,7 @@ public class BetaAgent : Agent
 
                 if (goHit.TryGetComponent<PlayerScript>(out PlayerScript playerScript))
                 {
-                    GetReward(2);
-                    isCombat = true;
+                    playerFound = true;
                 }
             }
         }
@@ -169,6 +170,11 @@ public class BetaAgent : Agent
                     EndEpisode();
                 }
             }
+        }
+
+        if (playerFound && !isCombat)
+        {
+            isCombat = true;
         }
     }
 }
