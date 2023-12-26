@@ -10,7 +10,6 @@ public class BetaAgent : Agent
 
     [SerializeField] public RayPerceptionSensorComponent3D frontRay;
     [SerializeField] public RayPerceptionSensorComponent3D sideRay;
-    [SerializeField] private PlayerScript player;
     private Vector3 moveToDirection;
     private Vector3 EnemyDirection;
     private float moveX;
@@ -20,7 +19,8 @@ public class BetaAgent : Agent
     private bool isCombat = false;
 
     public override void OnEpisodeBegin()
-    {       
+    {
+        PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
         transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
         target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
@@ -106,23 +106,23 @@ public class BetaAgent : Agent
         Debug.DrawRay(transform.position, transform.forward * 30, Color.green);
         if (Physics.Raycast(transform.position, transform.forward, out hit, 35f))
         {
-            if (hit.transform.gameObject.GetComponent<PlayerScript>())
-            {
-                var playerHealth = hit.transform.gameObject.GetComponent<PlayerScript>();
-                playerHealth.TakeDamage(1);
-                Shoot();
-                if (playerHealth.CheckDead())
-                {                    
-                    GetReward(3);
-                    Debug.Log("Player Defeated");
+            if (hit.transform.gameObject.GetComponent<FPSController>())
+            {  
+                if (PlayerHealth.health.GetCurrentHealth() <= 0)
+                {
+                    //Debug.Log("Player Defeated");
+                    GetReward(3);                   
                     EndEpisode();
                 }
+                Shoot();
             }
         }
     }
 
     private void Shoot()
-    {                
+    {
+        PlayerHealth.health.SetHealth(PlayerHealth.health.GetCurrentHealth() - 7);
+        //Debug.Log(PlayerHealth.health.GetCurrentHealth());
         GetReward(2);
     }
 
@@ -145,7 +145,7 @@ public class BetaAgent : Agent
                 var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
 
-                if (goHit.TryGetComponent<PlayerScript>(out PlayerScript playerScript))
+                if (goHit.TryGetComponent<FPSController>(out FPSController playerScript))
                 {
                     playerFound = true;
                 }

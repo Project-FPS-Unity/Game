@@ -32,13 +32,13 @@ public class PlayerHealth : MonoBehaviour
     {
         //Health Check
         health.CheckHealth();
-        if (health.isDead) Debug.Log("Die");
+        //if (health.isDead) Debug.Log("Die");
         Health();
     }
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        UpdateHealthUI();
+        //UpdateHealthUI();
         // Test Damage and Heal System
         if (Input.GetKeyDown(KeyCode.F))
         {
