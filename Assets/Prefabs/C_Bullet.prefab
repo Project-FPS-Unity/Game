@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1130268929838050413}
   - component: {fileID: 485549451150888416}
   - component: {fileID: -2169503521810735991}
-  - component: {fileID: 4034135649651074093}
+  - component: {fileID: 6337962342638335243}
+  - component: {fileID: 8440428764550366691}
   m_Layer: 0
   m_Name: C_Bullet
   m_TagString: Untagged
@@ -112,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4034135649651074093
+--- !u!114 &6337962342638335243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,14 +122,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 3150825420721219469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d01f5234f2270447bd4e254af83a514, type: 3}
+  m_Script: {fileID: 11500000, guid: 40ec2b2b58b12ba429f54b039c453834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsCam: {fileID: 0}
-  muzzleFlash: {fileID: 0}
-  cam: {fileID: 0}
-  attackPoint: {fileID: 0}
-  objectToFire: {fileID: 0}
-  fireCooldown: 0
-  bulletForce: 0
-  bulletUpwardForce: 0
+--- !u!135 &8440428764550366691
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3150825420721219469}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.02789745
+  m_Center: {x: 0.0000006677583, y: 0.000000014901161, z: 0.0052029863}

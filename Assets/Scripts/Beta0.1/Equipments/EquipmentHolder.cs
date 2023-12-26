@@ -7,7 +7,6 @@ public class EquipmentHolder : MonoBehaviour
     [Header("Sway Settings")]
     private float smooth = 8f;
     private float swayMultiplier = 2f;
-    [SerializeField] private Medkit medkit;
 
     // Start is called before the first frame update
     void Start()
@@ -24,19 +23,19 @@ public class EquipmentHolder : MonoBehaviour
         {
             if (currentEquipment >= transform.childCount - 1) currentEquipment = 0;
             else currentEquipment++;
-            if (currentEquipment == 2 && medkit.IsUsedMedkit())
-            {
-                currentEquipment = 3;
-            }
+            //if (currentEquipment == 2 && !Medkit.haveMedkit)
+            //{
+            //    currentEquipment = 3;
+            //}
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             if (currentEquipment <= 0) currentEquipment = transform.childCount - 1;
             else currentEquipment--;
-            if (currentEquipment == 2 && medkit.IsUsedMedkit())
-            {
-                currentEquipment = 1;
-            }
+            //if (currentEquipment == 2 && !Medkit.haveMedkit)
+            //{
+            //    currentEquipment = 1;
+            //}
         }
         if (previousEquipment != currentEquipment) SelectedEquipment(currentEquipment);
 

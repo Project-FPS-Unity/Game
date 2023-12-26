@@ -6,7 +6,7 @@ public abstract class Equipment : MonoBehaviour
     // Setting
     private void Start()
     {
-        InitAmmo();
+        InitValue();
     }
     private void Update()
     {
@@ -16,5 +16,5 @@ public abstract class Equipment : MonoBehaviour
     // Override Methods
     protected abstract void Action();
     protected abstract IEnumerator Reload();
-    protected abstract void InitAmmo();
+    protected abstract void InitValue();
 }

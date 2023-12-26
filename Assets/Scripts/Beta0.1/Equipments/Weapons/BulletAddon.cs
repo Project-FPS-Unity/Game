@@ -30,8 +30,6 @@ public abstract class BulletAddon : MonoBehaviour
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
             enemy.TakeDamage(damage);
-
-            
         }
 
         Destroy(gameObject);

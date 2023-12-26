@@ -27,7 +27,7 @@ public class Grenade : Equipment
         }
     }
 
-    protected override void InitAmmo()
+    protected override void InitValue()
     {
         readyToThrow = true;
     }

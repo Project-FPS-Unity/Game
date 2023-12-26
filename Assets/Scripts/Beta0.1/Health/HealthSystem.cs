@@ -19,10 +19,9 @@ public class HealthSystem
         currentHealth = maxHealth;
     }
 
-    public float CheckHealth()
+    public void CheckHealth()
     {
         if (currentHealth <= 0) isDead = true;
-        return currentHealth;
     }
 
     public void TakeDamage(float damage)
@@ -37,6 +36,10 @@ public class HealthSystem
         this.SetLerpTimer(0);
     }
 
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
     public float GetHealth()
     {
         return currentHealth;

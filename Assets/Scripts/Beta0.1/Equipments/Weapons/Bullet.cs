@@ -4,45 +4,24 @@ using UnityEngine;
 
 public class Bullet
 {
-    private string weaponName;
-    private string bulletType;
-
     // bullet damage
     private float bulletDamage;
-    private float rifleDamage = 3f;
-    private float heavyRifleDamage = 10f;
 
-    // current bullet
+    // capacity
     private int currentBullet;
-    private int rifleMagazineCapacity = 100;
-    private int heavyMagazineCapacity = 30;
-
-    // remain bullet
     private int spareBullet;
-    private int rifleSpareBullet = 200;
-    private int heavySpareBullet = 60;
+    private int maxAmmo;
 
-    public Bullet(string weaponName, string bulletType)
+    public Bullet(float bulletDamage)
     {
-        this.weaponName = weaponName;
-        this.bulletType = bulletType;
-        MatchWeaponAndBullet();
+        this.bulletDamage = bulletDamage;
     }
 
-    private void MatchWeaponAndBullet()
+    public Bullet(int maxAmmo, int spareBullet)
     {
-        if (weaponName == "Rifle" && bulletType == "RifleBullet")
-        {
-            bulletDamage = rifleDamage;
-            currentBullet = rifleMagazineCapacity;
-            spareBullet = rifleSpareBullet;
-        }
-        else if (weaponName == "Heavy" && bulletType == "HeavyBullet")
-        {
-            bulletDamage = heavyRifleDamage;
-            currentBullet = heavyMagazineCapacity;
-            spareBullet = heavySpareBullet;
-        }
+        this.maxAmmo = maxAmmo;
+        this.spareBullet = spareBullet;
+        this.currentBullet = maxAmmo;
     }
 
     // getter
@@ -59,6 +38,11 @@ public class Bullet
     public int GetSpareBullet()
     {
         return spareBullet;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return maxAmmo;
     }
     
     // setter
