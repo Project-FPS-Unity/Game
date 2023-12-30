@@ -22,9 +22,9 @@ public class BetaAgent : Agent
     {
         PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
-        transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        //target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -106,7 +106,7 @@ public class BetaAgent : Agent
         Debug.DrawRay(transform.position, transform.forward * 30, Color.green);
         if (Physics.Raycast(transform.position, transform.forward, out hit, 35f))
         {
-            if (hit.transform.gameObject.GetComponent<FPSController>())
+            if (hit.transform.gameObject.tag == "Player")
             {  
                 if (PlayerHealth.health.GetCurrentHealth() <= 0)
                 {
@@ -135,17 +135,13 @@ public class BetaAgent : Agent
         for (int i = 0; i < rayFrontLength; i++)
         {
             GameObject goHit = frontOut.RayOutputs[i].HitGameObject;
-            if (goHit == null && isCombat)
-            {
-                isCombat = false;
-            }
             if (goHit != null)
             {
                 var EnemyDirection = frontOut.RayOutputs[i].EndPositionWorld - frontOut.RayOutputs[i].StartPositionWorld;
                 var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
 
-                if (goHit.TryGetComponent<FPSController>(out FPSController playerScript))
+                if (goHit.gameObject.tag == "Player")
                 {
                     playerFound = true;
                 }
@@ -167,7 +163,7 @@ public class BetaAgent : Agent
                 if (goHit.TryGetComponent<Wall>(out Wall wall))
                 {
                     GetReward(1);
-                    EndEpisode();
+                    //EndEpisode();
                 }
             }
         }
@@ -175,6 +171,10 @@ public class BetaAgent : Agent
         if (playerFound && !isCombat)
         {
             isCombat = true;
+        }
+        if (!playerFound && isCombat)
+        {
+            isCombat = false;
         }
     }
 }
