@@ -9,7 +9,7 @@ public class Setting : MonoBehaviour
     public AudioMixer audioMixer;
     public static float xlookSpeed = 200f;
     public static float ylookSpeed = 200f;
-    private float cameraDirection = 1;
+    public static float cameraDirection = 1;
     public void SetVolumn(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
@@ -22,12 +22,12 @@ public class Setting : MonoBehaviour
 
     public void SetMouseXSensitivity(float xSen)
     {
-        xlookSpeed = xSen * 10 * cameraDirection;
+        xlookSpeed = xSen * 10;
     }
 
     public void SetMouseYSensitivity(float ySen)
     {
-        ylookSpeed = ySen * 10 * cameraDirection;
+        ylookSpeed = ySen * 10;
     }
 
     public void ToggleInvertCamera(bool isInvert)
