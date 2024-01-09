@@ -31,6 +31,10 @@ public abstract class BulletAddon : MonoBehaviour
 
             enemy.TakeDamage(damage);
         }
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerHealth.health.TakeDamage(damage);
+        }
 
         Destroy(gameObject);
     }

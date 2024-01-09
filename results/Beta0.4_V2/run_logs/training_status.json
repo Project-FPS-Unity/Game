@@ -1,0 +1,66 @@
+{
+    "BetaBrain": {
+        "checkpoints": [
+            {
+                "steps": 149971,
+                "file_path": "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-149971.onnx",
+                "reward": 193.9318181818182,
+                "creation_time": 1704198444.6153598,
+                "auxillary_file_paths": [
+                    "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-149971.pt"
+                ]
+            },
+            {
+                "steps": 199938,
+                "file_path": "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-199938.onnx",
+                "reward": 163.70714282989502,
+                "creation_time": 1704198584.428842,
+                "auxillary_file_paths": [
+                    "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-199938.pt"
+                ]
+            },
+            {
+                "steps": 249976,
+                "file_path": "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-249976.onnx",
+                "reward": 178.82058829419753,
+                "creation_time": 1704198721.4263444,
+                "auxillary_file_paths": [
+                    "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-249976.pt"
+                ]
+            },
+            {
+                "steps": 299986,
+                "file_path": "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-299986.onnx",
+                "reward": 98.41666666666667,
+                "creation_time": 1704198872.7491658,
+                "auxillary_file_paths": [
+                    "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-299986.pt"
+                ]
+            },
+            {
+                "steps": 342939,
+                "file_path": "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-342939.onnx",
+                "reward": 175.9857142141887,
+                "creation_time": 1704199008.088959,
+                "auxillary_file_paths": [
+                    "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-342939.pt"
+                ]
+            }
+        ],
+        "elo": 1134.753658624604,
+        "final_checkpoint": {
+            "steps": 342939,
+            "file_path": "results\\Beta0.4_V2\\BetaBrain.onnx",
+            "reward": 175.9857142141887,
+            "creation_time": 1704199008.088959,
+            "auxillary_file_paths": [
+                "results\\Beta0.4_V2\\BetaBrain\\BetaBrain-342939.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.0+cu121"
+    }
+}

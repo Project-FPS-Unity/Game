@@ -10,21 +10,22 @@ public class BetaAgent : Agent
 
     [SerializeField] public RayPerceptionSensorComponent3D frontRay;
     [SerializeField] public RayPerceptionSensorComponent3D sideRay;
+    [SerializeField] private EnemyHeavy heavy;
     private Vector3 moveToDirection;
     private Vector3 EnemyDirection;
     private float moveX;
     private float moveY;
     private float moveZ;
     private float moveSpeed = 8f;
-    private bool isCombat = false;
+    private bool isCombat = false;    
 
     public override void OnEpisodeBegin()
     {
         PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
-        //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -110,19 +111,17 @@ public class BetaAgent : Agent
             {  
                 if (PlayerHealth.health.GetCurrentHealth() <= 0)
                 {
-                    //Debug.Log("Player Defeated");
                     GetReward(3);                   
                     EndEpisode();
                 }
-                Shoot();
+                Invoke("Shoot", 1);
             }
         }
     }
 
     private void Shoot()
     {
-        PlayerHealth.health.SetHealth(PlayerHealth.health.GetCurrentHealth() - 7);
-        //Debug.Log(PlayerHealth.health.GetCurrentHealth());
+        heavy.ShootTrigger();
         GetReward(2);
     }
 
@@ -160,10 +159,10 @@ public class BetaAgent : Agent
                 var scaledRayLength = rayDirection.magnitude;
                 float rayHitDistance = sideOut.RayOutputs[i].HitFraction * scaledRayLength;
 
-                if (goHit.TryGetComponent<Wall>(out Wall wall))
+                if (goHit.gameObject.tag == "Wall")
                 {
                     GetReward(1);
-                    //EndEpisode();
+                    EndEpisode();
                 }
             }
         }
