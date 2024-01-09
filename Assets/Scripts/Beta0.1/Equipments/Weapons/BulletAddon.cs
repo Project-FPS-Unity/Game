@@ -30,8 +30,10 @@ public abstract class BulletAddon : MonoBehaviour
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
             enemy.TakeDamage(damage);
-
-            
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerHealth.health.TakeDamage(damage);
         }
 
         Destroy(gameObject);

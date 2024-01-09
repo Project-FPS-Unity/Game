@@ -10,18 +10,18 @@ public class BetaAgent : Agent
 
     [SerializeField] public RayPerceptionSensorComponent3D frontRay;
     [SerializeField] public RayPerceptionSensorComponent3D sideRay;
-    [SerializeField] private PlayerScript player;
+    [SerializeField] private EnemyHeavy heavy;
     private Vector3 moveToDirection;
     private Vector3 EnemyDirection;
     private float moveX;
     private float moveY;
     private float moveZ;
     private float moveSpeed = 8f;
-    private bool isCombat = false;
+    private bool isCombat = false;    
 
     public override void OnEpisodeBegin()
     {
-        player = GetComponent<PlayerScript>();
+        PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
         //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
         //target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
@@ -45,10 +45,10 @@ public class BetaAgent : Agent
         moveZ = actions.ContinuousActions[2];
 
         Turn(moveY);
+        CheckRay();
 
         if (!isCombat)
         {
-            CheckRay();
             Move(moveZ);
         }
         else
@@ -77,11 +77,11 @@ public class BetaAgent : Agent
             case 1: //Hitwall
                 AddReward(-0.5f);
                 break;
-            case 2: //Found Player
-                AddReward(+0.1f);
-                break;
-            case 3: //Shoot
+            case 2: //Shoot
                 AddReward(+0.5f);
+                break;
+            case 3: //Player Die
+                AddReward(+0.75f);
                 break;
             default:
                 // code block
@@ -107,20 +107,22 @@ public class BetaAgent : Agent
         Debug.DrawRay(transform.position, transform.forward * 30, Color.green);
         if (Physics.Raycast(transform.position, transform.forward, out hit, 35f))
         {
-            if (hit.transform.gameObject.GetComponent<PlayerScript>())
-            {
-                var doDamage = hit.transform.gameObject.GetComponent<PlayerScript>();
-                doDamage.TakeDamage(1);
-                Shoot();                               
-                //player.TakeDamage(1);
+            if (hit.transform.gameObject.tag == "Player")
+            {  
+                if (PlayerHealth.health.GetCurrentHealth() <= 0)
+                {
+                    GetReward(3);                   
+                    EndEpisode();
+                }
+                Invoke("Shoot", 1);
             }
         }
     }
 
     private void Shoot()
-    {                
-        GetReward(3);
-        EndEpisode();
+    {
+        heavy.ShootTrigger();
+        GetReward(2);
     }
 
     private void CheckRay()
@@ -128,6 +130,7 @@ public class BetaAgent : Agent
         //Front vision
         RayPerceptionOutput frontOut = RayPerceptionSensor.Perceive(frontRay.GetRayPerceptionInput());
         int rayFrontLength = frontOut.RayOutputs.Length;
+        bool playerFound = false;
         for (int i = 0; i < rayFrontLength; i++)
         {
             GameObject goHit = frontOut.RayOutputs[i].HitGameObject;
@@ -137,10 +140,9 @@ public class BetaAgent : Agent
                 var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
 
-                if (goHit.TryGetComponent<PlayerScript>(out PlayerScript playerScript))
+                if (goHit.gameObject.tag == "Player")
                 {
-                    GetReward(2);
-                    isCombat = true;
+                    playerFound = true;
                 }
             }
         }
@@ -157,12 +159,21 @@ public class BetaAgent : Agent
                 var scaledRayLength = rayDirection.magnitude;
                 float rayHitDistance = sideOut.RayOutputs[i].HitFraction * scaledRayLength;
 
-                if (goHit.TryGetComponent<Wall>(out Wall wall))
+                if (goHit.gameObject.tag == "Wall")
                 {
                     GetReward(1);
                     EndEpisode();
                 }
             }
+        }
+
+        if (playerFound && !isCombat)
+        {
+            isCombat = true;
+        }
+        if (!playerFound && isCombat)
+        {
+            isCombat = false;
         }
     }
 }

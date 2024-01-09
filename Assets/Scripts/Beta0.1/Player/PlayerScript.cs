@@ -14,6 +14,8 @@ public class PlayerScript : CharacterBehaviour
     private float healAmount;
     private bool isHit = false;
     private float damageAmount;
+    //Check dead
+    private bool isDead = false;
 
     [Header("Movement")]
     private float moveSpeed = 7f;
@@ -80,7 +82,7 @@ public class PlayerScript : CharacterBehaviour
         else rb.drag = 0;
 
         // Interact Check
-        Interact();
+        //Interact();
     }
 
     // Inherited Function
@@ -122,7 +124,14 @@ public class PlayerScript : CharacterBehaviour
 
     protected override void Die()
     {
-        Destroy(gameObject);
+        isDead = true;
+        //Destroy(gameObject);
+    }
+
+    //Check dead
+    public bool CheckDead()
+    {
+        return isDead;
     }
 
     // Player Function
@@ -170,7 +179,7 @@ public class PlayerScript : CharacterBehaviour
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        UpdateHealthUI();
+        //UpdateHealthUI();
         // Test Damage and Heal System
         if (Input.GetKeyDown(KeyCode.F))
         {
