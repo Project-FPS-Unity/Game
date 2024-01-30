@@ -49,7 +49,14 @@ public abstract class Gun : Equipment
         {
             canReload = false;
             int difBullet = bullet.GetMaxAmmo() - bullet.GetCurrentBullet(); ;
-            if (difBullet < 100)
+            // case reload then spare bullet will be negative
+            if (bullet.GetSpareBullet() - difBullet < 0)
+            {
+                bullet.SetCurrentBullet(bullet.GetCurrentBullet() + bullet.GetSpareBullet());
+                bullet.SetSpareBullet(bullet.GetSpareBullet() - bullet.GetSpareBullet());
+            }
+            // case reload then spare bullet will be positive
+            else if (bullet.GetSpareBullet() - difBullet >= 0)
             {
                 bullet.SetCurrentBullet(bullet.GetCurrentBullet() + difBullet);
                 bullet.SetSpareBullet(bullet.GetSpareBullet() - difBullet);
