@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public string promptMessage;
+    public string promptMessage = "[E] to pickup";
 
     public void BaseInteract()
     {

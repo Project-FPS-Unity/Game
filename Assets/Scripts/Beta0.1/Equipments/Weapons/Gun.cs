@@ -127,4 +127,12 @@ public abstract class Gun : Equipment
 
     protected abstract void FireAnimation();
     protected abstract void ReloadAnimation();
+
+    public void FillAmmo()
+    {
+        Debug.Log("Ammo Filled");
+        bullet.SetSpareBullet(bullet.GetMaxSpareBullet());
+        bullet.SetCurrentBullet(bullet.GetMaxAmmo());
+        OnEnable();
+    }
 }
