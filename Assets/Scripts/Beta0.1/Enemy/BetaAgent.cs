@@ -2,30 +2,37 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-using UnityEngine.EventSystems;
 
 public class BetaAgent : Agent
 {
-    public Transform target;
+    [SerializeField] private RayPerceptionSensorComponent3D frontRay;
+    [SerializeField] private RayPerceptionSensorComponent3D sideRay;
+    [SerializeField] private Transform faceDirection;
 
-    [SerializeField] public RayPerceptionSensorComponent3D frontRay;
-    [SerializeField] public RayPerceptionSensorComponent3D sideRay;
+    [SerializeField] private Transform target;
     [SerializeField] private EnemyHeavy heavy;
+    private bool isCombat = false;
+
     private Vector3 moveToDirection;
-    private Vector3 EnemyDirection;
     private float moveX;
     private float moveY;
     private float moveZ;
-    private float moveSpeed = 8f;
-    private bool isCombat = false;    
+    private float moveSpeed = 6f;
+
+    [SerializeField] private AnimationController animationState;
+
+    private void Start()
+    {
+
+    }
 
     public override void OnEpisodeBegin()
     {
         PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
         //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -33,9 +40,9 @@ public class BetaAgent : Agent
         sensor.AddObservation(Vector3.Normalize(transform.localPosition));
         sensor.AddObservation(Quaternion.Normalize(transform.localRotation));
 
-        sensor.AddObservation(Vector3.Normalize(target.transform.localPosition));
+        sensor.AddObservation(Vector3.Normalize(target.localPosition));
         sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
-        sensor.AddObservation(Vector3.Normalize(transform.localPosition - target.transform.localPosition));
+        sensor.AddObservation(Vector3.Normalize(transform.localPosition - target.localPosition));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -49,10 +56,12 @@ public class BetaAgent : Agent
 
         if (!isCombat)
         {
-            Move(moveZ);
+            //Move(moveZ);
+            //animationState.AnimationManager("Walk");
         }
         else
         {
+            animationState.AnimationManager("Aim");
             InCombat();
         }
     }
@@ -104,8 +113,9 @@ public class BetaAgent : Agent
     private void InCombat()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position, transform.forward * 30, Color.green);
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 35f))
+        float pHealth = PlayerHealth.health.GetCurrentHealth();
+        Debug.DrawRay(faceDirection.position, faceDirection.forward * 30f, Color.green);
+        if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 35f))
         {
             if (hit.transform.gameObject.tag == "Player")
             {  
@@ -114,15 +124,17 @@ public class BetaAgent : Agent
                     GetReward(3);                   
                     EndEpisode();
                 }
-                Invoke("Shoot", 1);
+                //Invoke(nameof(Shoot), 0.25f);
+                Shoot();
+                GetReward(2);
             }
         }
     }
 
     private void Shoot()
-    {
+    {  
+        animationState.AnimationManager("Shoot");
         heavy.ShootTrigger();
-        GetReward(2);
     }
 
     private void CheckRay()

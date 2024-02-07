@@ -1,0 +1,66 @@
+{
+    "Beta4.0": {
+        "checkpoints": [
+            {
+                "steps": 349926,
+                "file_path": "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-349926.onnx",
+                "reward": -0.5,
+                "creation_time": 1707304404.6202,
+                "auxillary_file_paths": [
+                    "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-349926.pt"
+                ]
+            },
+            {
+                "steps": 399974,
+                "file_path": "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-399974.onnx",
+                "reward": -0.5,
+                "creation_time": 1707304627.3233051,
+                "auxillary_file_paths": [
+                    "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-399974.pt"
+                ]
+            },
+            {
+                "steps": 449999,
+                "file_path": "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-449999.onnx",
+                "reward": 77.48051948051948,
+                "creation_time": 1707304865.8253937,
+                "auxillary_file_paths": [
+                    "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-449999.pt"
+                ]
+            },
+            {
+                "steps": 499942,
+                "file_path": "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-499942.onnx",
+                "reward": -0.5,
+                "creation_time": 1707305112.924546,
+                "auxillary_file_paths": [
+                    "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-499942.pt"
+                ]
+            },
+            {
+                "steps": 500966,
+                "file_path": "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-500966.onnx",
+                "reward": -0.5,
+                "creation_time": 1707305113.3153965,
+                "auxillary_file_paths": [
+                    "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-500966.pt"
+                ]
+            }
+        ],
+        "elo": -921.696611917324,
+        "final_checkpoint": {
+            "steps": 500966,
+            "file_path": "results\\BetaV4_FaceTrack2\\Beta4.0.onnx",
+            "reward": -0.5,
+            "creation_time": 1707305113.3153965,
+            "auxillary_file_paths": [
+                "results\\BetaV4_FaceTrack2\\Beta4.0\\Beta4.0-500966.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}
