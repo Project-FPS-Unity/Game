@@ -12,7 +12,7 @@ public class Medkit_Item : Interactable
 
     private void PickUpMedkit()
     {
-
+        
         if (Medkit.currentMedkit >= 1)
         {
             Debug.Log("Medkit Full");
