@@ -12,7 +12,6 @@ public class EquipmentHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //medkit = GetComponent<Medkit>();
         SelectedEquipment(currentEquipment);
     }
 
@@ -33,10 +32,6 @@ public class EquipmentHolder : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentEquipment = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            currentEquipment = 1;
         }
         if (previousEquipment != currentEquipment) SelectedEquipment(currentEquipment);
 

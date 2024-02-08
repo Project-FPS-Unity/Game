@@ -10,12 +10,12 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     public static HealthSystem health;
     private float maxHealth = 100f;
-    private bool isHit = false;
-    private bool isUsedMedkit = false;
+    //private bool isHit = false;
+    //private bool isUsedMedkit = false;
 
     // Mockup
-    private float damageAmount;
-    private float healAmount;
+    //private float damageAmount;
+    //private float healAmount;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -40,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
         UpdateHealthUI();
         // Test Damage and Heal System
+        /*
         if (Input.GetKeyDown(KeyCode.F))
         {
             health.TakeDamage(Random.Range(5, 10));
@@ -59,6 +60,7 @@ public class PlayerHealth : MonoBehaviour
             health.RestoreHealth(healAmount);
             isUsedMedkit = true;
         }
+        */
     }
     private void UpdateHealthUI()
     {

@@ -33,19 +33,19 @@ public class Medkit : Equipment
     }
 
     // Equipment Action
-    private void UseMedkit()
+    public void UseMedkit()
     {
         if(currentMedkit > 0)
         {
             //gameObject.SetActive(true);
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 PlayerHealth.health.SetHealth(PlayerHealth.health.GetCurrentHealth() + healAmount);
                 Debug.Log("Medkit is used");
                 //Destroy(gameObject);
                 currentMedkit--;
                 //isUsedMedkit = true;
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
         //Debug.Log("IsUseMedKit = " + IsUsedMedkit());
@@ -56,17 +56,17 @@ public class Medkit : Equipment
         currentMedkit = maxMedkit;
     }
 
-    private void OnDisable()
-    {
-        if (currentMedkit == 1)
-        {
-            haveMedkit = true;
-        }
-        else if (currentMedkit == 0)
-        {
-            haveMedkit = false;
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    if (currentMedkit == 1)
+    //    {
+    //        haveMedkit = true;
+    //    }
+    //    else if (currentMedkit == 0)
+    //    {
+    //        haveMedkit = false;
+    //    }
+    //}
 
     //public bool IsUsedMedkit()
     //{

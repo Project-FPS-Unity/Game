@@ -14,7 +14,7 @@ public abstract class BulletAddon : MonoBehaviour
         SetBulletDamage(DamageToSet());
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (targetHit)
         {
@@ -31,8 +31,15 @@ public abstract class BulletAddon : MonoBehaviour
 
             enemy.TakeDamage(damage);
         }
+        if (collision.gameObject.layer != 8) // Layer 8 --> Invisible Wall
+        {
+            Destroy(gameObject);
+        }     
+    }
 
-        Destroy(gameObject);
+    private void Update()
+    {
+        Destroy(gameObject, 3f);
     }
 
     private void SetBulletDamage(float damageToSet)
