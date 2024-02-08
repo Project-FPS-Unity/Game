@@ -18,6 +18,7 @@ public class BetaAgent : Agent
     private float moveY;
     private float moveZ;
     private float moveSpeed = 6f;
+    private float aimSpeed = 4f;
 
     [SerializeField] private AnimationController animationState;
 
@@ -30,8 +31,8 @@ public class BetaAgent : Agent
     {
         PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
-        //transform.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        target.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
         transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
@@ -41,8 +42,9 @@ public class BetaAgent : Agent
         sensor.AddObservation(Quaternion.Normalize(transform.localRotation));
 
         sensor.AddObservation(Vector3.Normalize(target.localPosition));
-        sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
-        sensor.AddObservation(Vector3.Normalize(transform.localPosition - target.localPosition));
+        //sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
+        //sensor.AddObservation(Quaternion.Normalize(new Quaternion(0, target.localRotation.y - transform.localRotation.y, 0, 0)));
+        sensor.AddObservation((Vector3.Distance(transform.localPosition, target.localPosition)));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -51,17 +53,17 @@ public class BetaAgent : Agent
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
 
-        Turn(moveY);
+        
         CheckRay();
 
         if (!isCombat)
         {
-            //Move(moveZ);
-            //animationState.AnimationManager("Walk");
+            Turn(moveY);
+            Move(moveZ);
         }
         else
         {
-            animationState.AnimationManager("Aim");
+            Aim(moveY);
             InCombat();
         }
     }
@@ -86,11 +88,14 @@ public class BetaAgent : Agent
             case 1: //Hitwall
                 AddReward(-0.5f);
                 break;
-            case 2: //Shoot
+            case 2: //Found Player
+                AddReward(+0.2f);
+                break;
+            case 3: //Shoot
                 AddReward(+0.5f);
                 break;
-            case 3: //Player Die
-                AddReward(+0.75f);
+            case 4: //Player Die
+                AddReward(+0.8f);
                 break;
             default:
                 // code block
@@ -103,6 +108,7 @@ public class BetaAgent : Agent
         moveToDirection = transform.forward * z;
         if (z < 0) GetReward(0);
         transform.localPosition += moveToDirection * Time.deltaTime * moveSpeed;
+        animationState.AnimationManager("Walk");
     }
 
     private void Turn(float y)
@@ -110,31 +116,36 @@ public class BetaAgent : Agent
         transform.Rotate(0, y * moveSpeed, 0);
     }
 
+    private void Aim(float y)
+    {
+        animationState.AnimationManager("Aim");
+        transform.Rotate(0, y * aimSpeed, 0);
+    }
+
+    private void Shoot()
+    {
+        animationState.AnimationManager("Shoot");
+        heavy.ShootTrigger();
+    }
+
+
     private void InCombat()
     {
         RaycastHit hit;
-        float pHealth = PlayerHealth.health.GetCurrentHealth();
-        Debug.DrawRay(faceDirection.position, faceDirection.forward * 30f, Color.green);
-        if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 35f))
+        Debug.DrawRay(faceDirection.position, faceDirection.forward * 40f, Color.green);
+        if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 40f))
         {
             if (hit.transform.gameObject.tag == "Player")
-            {  
+            {
                 if (PlayerHealth.health.GetCurrentHealth() <= 0)
                 {
-                    GetReward(3);                   
+                    GetReward(4);
                     EndEpisode();
                 }
                 //Invoke(nameof(Shoot), 0.25f);
                 Shoot();
-                GetReward(2);
             }
         }
-    }
-
-    private void Shoot()
-    {  
-        animationState.AnimationManager("Shoot");
-        heavy.ShootTrigger();
     }
 
     private void CheckRay()
@@ -185,7 +196,7 @@ public class BetaAgent : Agent
         }
         if (!playerFound && isCombat)
         {
-            isCombat = false;
+            isCombat = false;            
         }
     }
 }
