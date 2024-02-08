@@ -10,8 +10,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     public static HealthSystem health;
     private float maxHealth = 100f;
-    //private bool isHit = false;
-    //private bool isUsedMedkit = false;
+    private bool isHit = false;
+    private bool isUsedMedkit = false;
 
     // Mockup
     //private float damageAmount;
@@ -35,12 +35,16 @@ public class PlayerHealth : MonoBehaviour
         //if (health.isDead) Debug.Log("Die");
         Health();
     }
+    public void TakeDamage(float damage)
+    {
+        health.TakeDamage(damage);
+    }
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        //UpdateHealthUI();
+        UpdateHealthUI();
         // Test Damage and Heal System
-        /*
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             health.TakeDamage(Random.Range(5, 10));
@@ -49,18 +53,17 @@ public class PlayerHealth : MonoBehaviour
         {
             health.RestoreHealth(Random.Range(5, 10));
         }
-        // Damage and Heal System
-        if (isHit)
-        {
-            health.TakeDamage(damageAmount);
-            isHit = false;
-        }
-        if (!isUsedMedkit)
-        {
-            health.RestoreHealth(healAmount);
-            isUsedMedkit = true;
-        }
-        */
+        //// Damage and Heal System
+        //if (isHit)
+        //{
+        //    health.TakeDamage(damageAmount);
+        //    isHit = false;
+        //}
+        //if (!isUsedMedkit)
+        //{
+        //    health.RestoreHealth(healAmount);
+        //    isUsedMedkit = true;
+        //}        
     }
     private void UpdateHealthUI()
     {

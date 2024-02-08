@@ -31,6 +31,11 @@ public abstract class BulletAddon : MonoBehaviour
 
             enemy.TakeDamage(damage);
         }
+        if (collision.gameObject.GetComponent<PlayerHealth>() != null)
+        {
+            PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+            player.TakeDamage(damage);
+        }
         if (collision.gameObject.layer != 8) // Layer 8 --> Invisible Wall
         {
             Destroy(gameObject);

@@ -24,16 +24,16 @@ public class BetaAgent : Agent
 
     private void Start()
     {
-
+        target = GameObject.Find("Model").GetComponent<Transform>();
     }
 
     public override void OnEpisodeBegin()
     {
         PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
-        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
-        target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
-        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        //transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        //target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
