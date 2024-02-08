@@ -63,7 +63,7 @@ public class Enemy : CharacterBehaviour
 
     protected override void Die()
     {
-        ScoreManager.scoreCount += enemyScore;
+        ScoreUpdater.scoreCount += enemyScore;
         Destroy(gameObject);
     }
 

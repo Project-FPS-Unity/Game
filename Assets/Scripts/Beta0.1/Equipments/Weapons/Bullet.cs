@@ -11,6 +11,7 @@ public class Bullet
     private int currentBullet;
     private int spareBullet;
     private int maxAmmo;
+    private int maxSpareBullet;
 
     public Bullet(float bulletDamage)
     {
@@ -20,6 +21,7 @@ public class Bullet
     public Bullet(int maxAmmo, int spareBullet)
     {
         this.maxAmmo = maxAmmo;
+        this.maxSpareBullet = spareBullet;
         this.spareBullet = spareBullet;
         this.currentBullet = maxAmmo;
     }
@@ -44,7 +46,12 @@ public class Bullet
     {
         return maxAmmo;
     }
-    
+
+    public int GetMaxSpareBullet()
+    {
+        return maxSpareBullet;
+    }
+
     // setter
     public void SetCurrentBullet(int bulletToSet)
     {

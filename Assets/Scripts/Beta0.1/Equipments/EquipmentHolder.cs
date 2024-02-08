@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EquipmentHolder : MonoBehaviour
@@ -11,7 +12,6 @@ public class EquipmentHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //medkit = GetComponent<Medkit>();
         SelectedEquipment(currentEquipment);
     }
 
@@ -23,19 +23,15 @@ public class EquipmentHolder : MonoBehaviour
         {
             if (currentEquipment >= transform.childCount - 1) currentEquipment = 0;
             else currentEquipment++;
-            //if (currentEquipment == 2 && !Medkit.haveMedkit)
-            //{
-            //    currentEquipment = 3;
-            //}
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             if (currentEquipment <= 0) currentEquipment = transform.childCount - 1;
             else currentEquipment--;
-            //if (currentEquipment == 2 && !Medkit.haveMedkit)
-            //{
-            //    currentEquipment = 1;
-            //}
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentEquipment = 0;
         }
         if (previousEquipment != currentEquipment) SelectedEquipment(currentEquipment);
 
@@ -64,10 +60,5 @@ public class EquipmentHolder : MonoBehaviour
         Quaternion targetRotation = rotateX * rotateY;
         //Sway equipments
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
-    }
-
-    public void SetCurrentEquipment(int numberToSet)
-    {
-        currentEquipment = 2;
     }
 }

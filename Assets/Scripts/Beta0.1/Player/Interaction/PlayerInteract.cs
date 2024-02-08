@@ -40,7 +40,7 @@ public class PlayerInteract : MonoBehaviour
             }
         }
     }
-    private void UpdateText(string message)
+    private void UpdateText(string message = "[E] to pickup")
     {
         promptText.text = message;
     }
