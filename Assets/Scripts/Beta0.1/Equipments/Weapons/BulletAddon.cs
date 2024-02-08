@@ -31,10 +31,11 @@ public abstract class BulletAddon : MonoBehaviour
 
             enemy.TakeDamage(damage);
         }
-        if (collision.gameObject.GetComponent<PlayerHealth>() != null)
+        if (collision.gameObject.tag == "Player")
         {
-            PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+            PlayerHealth player = collision.gameObject.GetComponentInParent<PlayerHealth>();
             player.TakeDamage(damage);
+            Debug.Log(collision.gameObject.GetComponentInParent<PlayerHealth>());
         }
         if (collision.gameObject.layer != 8) // Layer 8 --> Invisible Wall
         {

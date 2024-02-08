@@ -63,7 +63,7 @@ public class BetaAgent : Agent
         }
         else
         {
-            Aim(moveY);
+            //Aim(moveY);
             InCombat();
         }
     }
