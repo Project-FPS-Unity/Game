@@ -8,6 +8,10 @@ public class ScoreUpdater : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     public static float scoreCount;
 
+    private void Awake()
+    {
+        score = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+    }
     // Start is called before the first frame update
     void Start()
     {

@@ -11,7 +11,7 @@ public class EnemiesSpawner : MonoBehaviour
     private int xPos;
     private int zPos;
     private int enemyCount;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +23,9 @@ public class EnemiesSpawner : MonoBehaviour
     {
         while(enemyCount < maxEnemies)
         {
-            xPos = Random.Range(1, 30);
-            zPos = Random.Range(1,30);
-            Instantiate(theEnemy, new Vector3(xPos, gameObject.transform.position.y, zPos), Quaternion.identity);
+            xPos = Random.Range(-10, 10);
+            zPos = Random.Range(-10,10);
+            Instantiate(theEnemy, new Vector3(transform.position.x + xPos, transform.position.y, transform.position.z + zPos), Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
             enemyCount++;
         }

@@ -22,7 +22,7 @@ public class BetaAgent : Agent
 
     [SerializeField] private AnimationController animationState;
 
-    private void Start()
+    private void Awake()
     {
         target = GameObject.Find("Model").GetComponent<Transform>();
     }
