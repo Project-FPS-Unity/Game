@@ -25,28 +25,31 @@ public class BetaAgent : Agent
     [SerializeField] private AnimationController animationState;
 
     //for Train
-    [SerializeField] private Renderer ground;
+    //[SerializeField] private Renderer ground;
 
     private void Start()
     {
-        //target = GameObject.Find("Model").GetComponent<Transform>();
+        target = GameObject.Find("Model").GetComponent<Transform>();
     }
 
     public override void OnEpisodeBegin()
     {
         PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
-        transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
-        target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
-        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        //transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        //if(target != null) target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
+        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(transform.localRotation.eulerAngles / 180.0f - Vector3.one);
-        sensor.AddObservation(target.localPosition);
-        sensor.AddObservation(Vector3.Distance(transform.localPosition, target.position));
+        if (target != null)
+        {
+            sensor.AddObservation(target.localPosition);
+            sensor.AddObservation(Vector3.Distance(transform.localPosition, target.position));
+        }
         //sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
         //sensor.AddObservation(Quaternion.Normalize(new Quaternion(0, target.localRotation.y - transform.localRotation.y, 0, 0)));
     }
@@ -56,6 +59,11 @@ public class BetaAgent : Agent
         moveX = actions.ContinuousActions[0];
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
+
+        if (target == null)
+        {
+            target = transform;
+        }
 
         CheckRay();
 
@@ -200,13 +208,13 @@ public class BetaAgent : Agent
         if (playerFound_F && playerFound_S)
         {
             GetReward(2);
-            ground.material.SetColor("_Color", Color.green);
+            //ground.material.SetColor("_Color", Color.green);
             EndEpisode();
         }
         if (foundObstacle_F && foundObstacle_S)
         {
             GetReward(1);
-            ground.material.SetColor("_Color", Color.red);
+            //ground.material.SetColor("_Color", Color.red);
             EndEpisode();
         }
         //if (playerFound_F && !isCombat)
