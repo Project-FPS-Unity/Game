@@ -16,7 +16,7 @@ public class AnimationController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        animationState = "Idle";
+        animationState = "";
     }
 
     void Update()
