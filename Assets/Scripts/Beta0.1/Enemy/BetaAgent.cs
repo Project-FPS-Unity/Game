@@ -40,11 +40,14 @@ public class BetaAgent : Agent
     {
         sensor.AddObservation(Vector3.Normalize(transform.localPosition));
         sensor.AddObservation(Quaternion.Normalize(transform.localRotation));
-
-        sensor.AddObservation(Vector3.Normalize(target.localPosition));
+        if (target != null)
+        {
+            sensor.AddObservation(Vector3.Normalize(target.localPosition));
+            sensor.AddObservation((Vector3.Distance(transform.localPosition, target.localPosition)));
+        }
         //sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
         //sensor.AddObservation(Quaternion.Normalize(new Quaternion(0, target.localRotation.y - transform.localRotation.y, 0, 0)));
-        sensor.AddObservation((Vector3.Distance(transform.localPosition, target.localPosition)));
+        
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -53,6 +56,10 @@ public class BetaAgent : Agent
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
 
+        if (target != null)
+        {
+            target = transform;
+        }
         
         CheckRay();
 
@@ -63,7 +70,7 @@ public class BetaAgent : Agent
         }
         else
         {
-            //Aim(moveY);
+            Aim(moveY);
             InCombat();
         }
     }
