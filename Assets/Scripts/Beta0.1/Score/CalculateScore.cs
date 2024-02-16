@@ -39,7 +39,7 @@ public class CalculateScore : MonoBehaviour
     {
         Leaderboards.Leaderboard.UploadNewEntry(username.text, Score(), isSuccessful =>
         {
-            if (isSuccessful)
+            if (isSuccessful && username.text != "")
             {
                 Debug.Log("Upload Data Successfully");
                 Time.timeScale = 1f;
