@@ -52,6 +52,7 @@ public class BetaAgent : Agent
         }
         //sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
         //sensor.AddObservation(Quaternion.Normalize(new Quaternion(0, target.localRotation.y - transform.localRotation.y, 0, 0)));
+        sensor.AddObservation((Vector3.Distance(transform.localPosition, target.localPosition)));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
