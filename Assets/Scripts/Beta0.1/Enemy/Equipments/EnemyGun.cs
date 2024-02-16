@@ -63,17 +63,17 @@ public abstract class EnemyGun : Equipment
 
     private void GetKeyToAction()
     {
-        // hold left mouse
-        if (Input.GetMouseButton(0) && readyToFire && bullet.GetCurrentBullet() > 0)
-        {
-            FireBullet();
-        }
-        // reload
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(Reload());
-            return;
-        }
+        //// hold left mouse
+        //if (Input.GetMouseButton(0) && readyToFire && bullet.GetCurrentBullet() > 0)
+        //{
+        //    FireBullet();
+        //}
+        //// reload
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    StartCoroutine(Reload());
+        //    return;
+        //}
     }
     private void FireBullet()
     {

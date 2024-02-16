@@ -6,41 +6,33 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    
+    [Header("Loader")]
+    [SerializeField] private AsyncLoader asyncLoader;
+
+    [Header("Panel")]
+    [SerializeField] private GameObject optionPanel;
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject scoreboardPanel;
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
-        //LoadSceneAsync(1);
+        asyncLoader.LoadLevel(1);
+    }
+
+    public void Option()
+    {
+        optionPanel.SetActive(true);
+        menuPanel.SetActive(false);
+    }
+
+    public void Scoreboard()
+    {
+        scoreboardPanel.SetActive(true);
+        menuPanel.SetActive(false);
     }
 
     public void QuitGame()
     {
+
         Application.Quit();
     }
-
-    /*
-    public Slider progressBar;
-    public void LoadSceneAsync(int sceneIndex)
-    {
-        StartCoroutine(LoadSceneAsyncCoroutine(sceneIndex));
-    }
-
-    private IEnumerator LoadSceneAsyncCoroutine(int sceneIndex)
-    {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
-        asyncOperation.allowSceneActivation = false;
-
-        while (!asyncOperation.isDone)
-        {
-            progressBar.value = Mathf.Clamp01(asyncOperation.progress / 0.9f);
-
-            if (asyncOperation.progress >= 0.9f && progressBar.value >= 1f)
-            {
-                asyncOperation.allowSceneActivation = true;
-            }
-
-            yield return null;
-        }
-    }
-    */
 }

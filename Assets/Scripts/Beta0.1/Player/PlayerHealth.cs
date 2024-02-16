@@ -14,8 +14,8 @@ public class PlayerHealth : MonoBehaviour
     private bool isUsedMedkit = false;
 
     // Mockup
-    private float damageAmount;
-    private float healAmount;
+    //private float damageAmount;
+    //private float healAmount;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -35,11 +35,16 @@ public class PlayerHealth : MonoBehaviour
         //if (health.isDead) Debug.Log("Die");
         Health();
     }
+    public void TakeDamage(float damage)
+    {
+        health.TakeDamage(damage);
+    }
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
         UpdateHealthUI();
         // Test Damage and Heal System
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             health.TakeDamage(Random.Range(5, 10));
@@ -48,17 +53,17 @@ public class PlayerHealth : MonoBehaviour
         {
             health.RestoreHealth(Random.Range(5, 10));
         }
-        // Damage and Heal System
-        if (isHit)
-        {
-            health.TakeDamage(damageAmount);
-            isHit = false;
-        }
-        if (!isUsedMedkit)
-        {
-            health.RestoreHealth(healAmount);
-            isUsedMedkit = true;
-        }
+        //// Damage and Heal System
+        //if (isHit)
+        //{
+        //    health.TakeDamage(damageAmount);
+        //    isHit = false;
+        //}
+        //if (!isUsedMedkit)
+        //{
+        //    health.RestoreHealth(healAmount);
+        //    isUsedMedkit = true;
+        //}        
     }
     private void UpdateHealthUI()
     {

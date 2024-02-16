@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Flooded Scene.unity
     guid: 0086861e12ecf1a4091372152faa677d
+  - enabled: 1
+    path: Assets/Scenes/Ending Scene.unity
+    guid: 2352dd643214cd6448d6e5a7e0333c69
   m_configObjects: {}
