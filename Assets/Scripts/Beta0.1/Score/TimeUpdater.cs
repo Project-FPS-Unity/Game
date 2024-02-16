@@ -16,7 +16,7 @@ public class TimeUpdater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeRemain = 15f;
+        timeRemain = 60f;
         enemyKillCount = 0;
     }
 

@@ -48,11 +48,10 @@ public class BetaAgent : Agent
         if (target != null)
         {
             sensor.AddObservation(target.localPosition);
-            sensor.AddObservation(Vector3.Distance(transform.localPosition, target.position));
+            sensor.AddObservation(Vector3.Distance(transform.localPosition, target.localPosition));
         }
         //sensor.AddObservation(Vector3.Normalize(transform.forward * 30));
         //sensor.AddObservation(Quaternion.Normalize(new Quaternion(0, target.localRotation.y - transform.localRotation.y, 0, 0)));
-        sensor.AddObservation((Vector3.Distance(transform.localPosition, target.localPosition)));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -210,21 +209,21 @@ public class BetaAgent : Agent
         {
             GetReward(2);
             //ground.material.SetColor("_Color", Color.green);
-            EndEpisode();
+            //EndEpisode();
         }
         if (foundObstacle_F && foundObstacle_S)
         {
             GetReward(1);
             //ground.material.SetColor("_Color", Color.red);
-            EndEpisode();
+            //EndEpisode();
         }
-        //if (playerFound_F && !isCombat)
-        //{
-        //    isCombat = true;
-        //}
-        //if (!playerFound_F && isCombat)
-        //{
-        //    isCombat = false;
-        //}
+        if (playerFound_F && !isCombat)
+        {
+            isCombat = true;
+        }
+        if (!playerFound_F && isCombat)
+        {
+            isCombat = false;
+        }
     }
 }

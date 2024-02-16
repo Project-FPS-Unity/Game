@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        //UpdateHealthUI();
+        UpdateHealthUI();
         // Test Damage and Heal System
 
         if (Input.GetKeyDown(KeyCode.F))
