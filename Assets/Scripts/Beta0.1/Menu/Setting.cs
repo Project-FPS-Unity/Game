@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Setting : MonoBehaviour
 {
-    public float volume;
+    public static float volume = 0f;
     public AudioMixer audioMixer;
     public static float xlookSpeed = 200f;
     public static float ylookSpeed = 200f;
     public static float cameraDirection = 1;
+
+    private Slider slider;
+
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
