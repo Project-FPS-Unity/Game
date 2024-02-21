@@ -15,12 +15,14 @@ public class AmmoBox : Interactable
         {
             Heavy heavy = GameObject.Find("Heavy").GetComponent<Heavy>();
             heavy.FillAmmo();
+            Destroy(gameObject);
             //FillText();
         }
         if (FindObjectOfType<Rifle>() != null)
         {
             Rifle rifle = GameObject.Find("Rifle").GetComponent<Rifle>();
             rifle.FillAmmo();
+            Destroy(gameObject);
         }
     }
 }
