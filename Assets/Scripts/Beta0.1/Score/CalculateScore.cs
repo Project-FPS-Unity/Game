@@ -15,7 +15,6 @@ public class CalculateScore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI killScoreText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
     [SerializeField] private TMP_InputField username;
-    private LeaderboardManager leaderboardManager;
 
     private int Score()
     {
@@ -37,9 +36,13 @@ public class CalculateScore : MonoBehaviour
 
     public void UploadEntry()
     {
+        if (username.text == "")
+        {
+            return;
+        }
         Leaderboards.Leaderboard.UploadNewEntry(username.text, Score(), isSuccessful =>
         {
-            if (isSuccessful && username.text != "")
+            if (isSuccessful)
             {
                 Debug.Log("Upload Data Successfully");
                 Time.timeScale = 1f;

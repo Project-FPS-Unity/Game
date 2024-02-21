@@ -8,7 +8,7 @@ public class StageController : MonoBehaviour
     private bool isChange = false;
     [Header("UI")]
     [SerializeField] private GameObject playerUI;
-    [SerializeField] private GameObject EndPanel;
+    [SerializeField] private GameObject endPanel;
     // Update is called once per frame
     void Update()
     {
@@ -28,6 +28,6 @@ public class StageController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         playerUI.SetActive(false);
-        EndPanel.SetActive(true);
+        endPanel.SetActive(true);
     }
 }

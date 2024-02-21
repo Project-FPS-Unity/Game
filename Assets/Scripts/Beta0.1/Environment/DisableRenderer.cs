@@ -5,12 +5,13 @@ using UnityEngine;
 public class DisableRenderer : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-		GetComponent<Renderer> ().enabled = false;
+	void Start () 
+	{
+		DisableWall();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+	private void DisableWall()
+	{
+        GetComponent<Renderer>().enabled = false;
+    }
 }

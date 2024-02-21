@@ -10,7 +10,7 @@ public class Setting : MonoBehaviour
     public static float xlookSpeed = 200f;
     public static float ylookSpeed = 200f;
     public static float cameraDirection = 1;
-    public void SetVolumn(float volume)
+    public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
     }

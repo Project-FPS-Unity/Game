@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Medkit : Equipment
@@ -9,8 +10,6 @@ public class Medkit : Equipment
     public static int currentMedkit;
     private float healAmount = 20f;
     public static bool haveMedkit = true;
-
-    private PlayerHealth player;
 
     private void Awake()
     {
@@ -37,46 +36,16 @@ public class Medkit : Equipment
     {
         if(currentMedkit > 0)
         {
-            //gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 PlayerHealth.health.SetHealth(PlayerHealth.health.GetCurrentHealth() + healAmount);
-                Debug.Log("Medkit is used");
-                //Destroy(gameObject);
                 currentMedkit--;
-                //isUsedMedkit = true;
-                //gameObject.SetActive(false);
             }
         }
-        //Debug.Log("IsUseMedKit = " + IsUsedMedkit());
     }
 
     private void InitMedkit()
     {
         currentMedkit = maxMedkit;
     }
-
-    //private void OnDisable()
-    //{
-    //    if (currentMedkit == 1)
-    //    {
-    //        haveMedkit = true;
-    //    }
-    //    else if (currentMedkit == 0)
-    //    {
-    //        haveMedkit = false;
-    //    }
-    //}
-
-    //public bool IsUsedMedkit()
-    //{
-    //    return isUsedMedkit;
-    //}
-
-    //public void SetIsUsedMedkitToFalse()
-    //{
-    //    isUsedMedkit = false;
-    //    gameObject.SetActive(true);
-    //    currentMedkit = maxMedkit;
-    //}
 }

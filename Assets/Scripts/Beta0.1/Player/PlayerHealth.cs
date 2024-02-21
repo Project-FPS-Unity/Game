@@ -8,10 +8,11 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image frontHealthBar;
     [SerializeField] private Image backHealthBar;
     [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI medkitText;
     public static HealthSystem health;
     private float maxHealth = 100f;
-    private bool isHit = false;
-    private bool isUsedMedkit = false;
+    // private bool isHit = false;
+    // private bool isUsedMedkit = false;
 
     // Mockup
     //private float damageAmount;
@@ -30,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        medkitText.text = "x " + Medkit.currentMedkit.ToString();
         //Health Check
         health.CheckHealth();
         //if (health.isDead) Debug.Log("Die");
@@ -38,6 +40,11 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health.TakeDamage(damage);
+    }
+
+    public float GetPlayerCurrentHealth()
+    {
+        return health.GetCurrentHealth();
     }
     private void Health()
     {
