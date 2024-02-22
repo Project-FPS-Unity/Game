@@ -12,8 +12,6 @@ public class Setting : MonoBehaviour
     public static float ylookSpeed = 200f;
     public static float cameraDirection = 1;
 
-    private Slider slider;
-
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);

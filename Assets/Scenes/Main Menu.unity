@@ -1123,9 +1123,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1639622510}
     m_Modifications:
     - target: {fileID: 941190923487426376, guid: b2f2965ed25addc4a9c38866321e566c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1668244953}
+    - target: {fileID: 941190923487426376, guid: b2f2965ed25addc4a9c38866321e566c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
       objectReference: {fileID: 1668244953}
+    - target: {fileID: 941190923487426376, guid: b2f2965ed25addc4a9c38866321e566c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 941190923487426376, guid: b2f2965ed25addc4a9c38866321e566c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
       value: SetActive

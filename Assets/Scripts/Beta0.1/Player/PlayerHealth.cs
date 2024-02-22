@@ -51,7 +51,6 @@ public class PlayerHealth : MonoBehaviour
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
         UpdateHealthUI();
         // Test Damage and Heal System
-
         if (Input.GetKeyDown(KeyCode.F))
         {
             health.TakeDamage(Random.Range(5, 10));
@@ -59,18 +58,7 @@ public class PlayerHealth : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             health.RestoreHealth(Random.Range(5, 10));
-        }
-        //// Damage and Heal System
-        //if (isHit)
-        //{
-        //    health.TakeDamage(damageAmount);
-        //    isHit = false;
-        //}
-        //if (!isUsedMedkit)
-        //{
-        //    health.RestoreHealth(healAmount);
-        //    isUsedMedkit = true;
-        //}        
+        }  
     }
     private void UpdateHealthUI()
     {

@@ -13,6 +13,13 @@ public class StageController : MonoBehaviour
     void Update()
     {
         Debug.Log(TimeUpdater.timeRemain);
+        if (PlayerHealth.health.isDead)
+        {
+            // Ending
+            ToGameOverPanel();
+            //SceneManager.LoadSceneAsync(0);
+            isChange = true;
+        }
         if (TimeUpdater.timeRemain < 0 && isChange == false)
         {
             // Ending
