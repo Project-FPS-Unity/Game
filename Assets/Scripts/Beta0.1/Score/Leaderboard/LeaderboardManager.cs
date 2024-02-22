@@ -51,30 +51,5 @@ public class LeaderboardManager : MonoBehaviour
                 texts[1].text = el.points.ToString();
             }
         }
-
-        //Leaderboards.Leaderboard.GetEntries(entries =>
-        //{
-        //    foreach (var t in _entryTextObjects)
-        //    {
-        //        t.text = "";
-        //    }
-
-        //    var length = Mathf.Min(_entryTextObjects.Length, entries.Length);
-        //    for (int i = 0; i < length; i++)
-        //    {
-        //        _entryTextObjects[i].text = $"{entries[i].Rank}. {entries[i].Username} - {entries[i].Score}";
-        //    }
-        //});
     }
-
-    //public void UploadEntry()
-    //{
-    //    Leaderboards.Leaderboard.UploadNewEntry(_usernameInputField.text, Score, isSuccessful =>
-    //    {
-    //        if (isSuccessful)
-    //        {
-    //            LoadEntries();
-    //        }
-    //    });
-    //}
 }
