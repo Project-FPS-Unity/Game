@@ -10,7 +10,6 @@ public class Setting : MonoBehaviour
     public AudioMixer audioMixer;
     public static float xlookSpeed = 200f;
     public static float ylookSpeed = 200f;
-    public static float cameraDirection = 1;
 
     public void SetVolume(float volume)
     {
@@ -30,17 +29,5 @@ public class Setting : MonoBehaviour
     public void SetMouseYSensitivity(float ySen)
     {
         ylookSpeed = ySen * 10;
-    }
-
-    public void ToggleInvertCamera(bool isInvert)
-    {
-        if (isInvert == true)
-        {
-            cameraDirection = -1;
-        }
-        else
-        {
-            cameraDirection = 1;
-        }
     }
 }
