@@ -5,7 +5,7 @@ using UnityEngine;
 public class HighScoreHandler : MonoBehaviour
 {
     List<HighScoreElement> highscoreList = new List<HighScoreElement>();
-    [SerializeField] int maxCount = 7;
+    [SerializeField] int maxCount = 5;
     [SerializeField] string filename;
 
     public delegate void OnHighscoreListChanged(List<HighScoreElement> list);

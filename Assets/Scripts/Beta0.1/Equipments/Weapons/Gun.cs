@@ -130,7 +130,6 @@ public abstract class Gun : Equipment
 
     public void FillAmmo()
     {
-        // Debug.Log("Ammo Filled");
         bullet.SetSpareBullet(bullet.GetMaxSpareBullet());
         bullet.SetCurrentBullet(bullet.GetMaxAmmo());
         OnEnable();
