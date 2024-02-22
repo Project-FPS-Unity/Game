@@ -15,6 +15,7 @@ public class CalculateScore : MonoBehaviour
     [SerializeField] private TextMeshProUGUI killScoreText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
     [SerializeField] private TMP_InputField username;
+    [SerializeField] private HighScoreHandler highScoreHandler;
 
     private int Score()
     {
@@ -36,18 +37,17 @@ public class CalculateScore : MonoBehaviour
 
     public void UploadEntry()
     {
+        Debug.Log(username.text);
         if (username.text == "")
         {
             return;
         }
-        Leaderboards.Leaderboard.UploadNewEntry(username.text, Score(), isSuccessful =>
+        else
         {
-            if (isSuccessful)
-            {
-                Debug.Log("Upload Data Successfully");
-                Time.timeScale = 1f;
-                SceneManager.LoadSceneAsync(0);
-            }
-        });
+            Debug.Log("Saved");
+            highScoreHandler.AddHighScoreIfPossible(new HighScoreElement(username.text, Score()));
+            Time.timeScale = 1f;
+            SceneManager.LoadSceneAsync(0);
+        }
     }
 }

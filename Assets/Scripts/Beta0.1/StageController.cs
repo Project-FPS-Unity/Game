@@ -12,7 +12,7 @@ public class StageController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(TimeUpdater.timeRemain);
+        //Debug.Log(TimeUpdater.timeRemain);
         if (PlayerHealth.health.isDead)
         {
             // Ending

@@ -19,11 +19,11 @@ public class ResolutionController : MonoBehaviour
 
         resolutionDropdown.ClearOptions();
         currentRefleshRate = Screen.currentResolution.refreshRate;
-        Debug.Log("RefreshRate : " + currentRefleshRate);
+        // Debug.Log("RefreshRate : " + currentRefleshRate);
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            Debug.Log("Resolution : " + resolutions[i]);
+            // Debug.Log("Resolution : " + resolutions[i]);
             if (resolutions[i].refreshRate == currentRefleshRate)
             {
                 filterdResolutions.Add(resolutions[i]);
@@ -33,9 +33,11 @@ public class ResolutionController : MonoBehaviour
         List<string> options = new List<string>();
         for (int i = 0; i < filterdResolutions.Count; i++)
         {
-            string resolutionOption = filterdResolutions[i].width + "x" + filterdResolutions[i].height + " " + filterdResolutions[i].refreshRate + "Hz";
+            string resolutionOption = filterdResolutions[i].width + "x" 
+                + filterdResolutions[i].height + " " + filterdResolutions[i].refreshRate + "Hz";
             options.Add(resolutionOption);
-            if (filterdResolutions[i].width == Screen.width && filterdResolutions[i].height == Screen.height)
+            if (filterdResolutions[i].width == Screen.width
+                && filterdResolutions[i].height == Screen.height)
             {
                 currentResolutionIndex = i;
             }
