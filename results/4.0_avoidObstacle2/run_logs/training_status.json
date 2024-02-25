@@ -2,59 +2,59 @@
     "Beta4.0": {
         "checkpoints": [
             {
-                "steps": 349960,
-                "file_path": "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-349960.onnx",
-                "reward": -1.0862068965517242,
-                "creation_time": 1707830844.5708523,
+                "steps": 349995,
+                "file_path": "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-349995.onnx",
+                "reward": 14.70691823893748,
+                "creation_time": 1708842473.023864,
                 "auxillary_file_paths": [
-                    "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-349960.pt"
+                    "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-349995.pt"
                 ]
             },
             {
-                "steps": 399990,
-                "file_path": "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-399990.onnx",
-                "reward": 1.8571428571428572,
-                "creation_time": 1707830989.7193139,
+                "steps": 399915,
+                "file_path": "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-399915.onnx",
+                "reward": 14.699999991728335,
+                "creation_time": 1708842639.1622465,
                 "auxillary_file_paths": [
-                    "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-399990.pt"
+                    "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-399915.pt"
                 ]
             },
             {
-                "steps": 449966,
-                "file_path": "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-449966.onnx",
-                "reward": -0.08196721311475409,
-                "creation_time": 1707831131.2753649,
+                "steps": 449943,
+                "file_path": "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-449943.onnx",
+                "reward": 14.745864662684893,
+                "creation_time": 1708842801.878144,
                 "auxillary_file_paths": [
-                    "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-449966.pt"
+                    "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-449943.pt"
                 ]
             },
             {
-                "steps": 499975,
-                "file_path": "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-499975.onnx",
-                "reward": -0.38333333333333336,
-                "creation_time": 1707831276.4160674,
+                "steps": 499963,
+                "file_path": "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-499963.onnx",
+                "reward": 14.60277777744664,
+                "creation_time": 1708842966.805905,
                 "auxillary_file_paths": [
-                    "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-499975.pt"
+                    "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-499963.pt"
                 ]
             },
             {
-                "steps": 500103,
-                "file_path": "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-500103.onnx",
-                "reward": -0.38333333333333336,
-                "creation_time": 1707831276.5861309,
+                "steps": 500091,
+                "file_path": "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-500091.onnx",
+                "reward": 14.60277777744664,
+                "creation_time": 1708842966.9870896,
                 "auxillary_file_paths": [
-                    "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-500103.pt"
+                    "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-500091.pt"
                 ]
             }
         ],
-        "elo": -67.7532643423209,
+        "elo": 1185.2287085994315,
         "final_checkpoint": {
-            "steps": 500103,
-            "file_path": "results\\4.0_avoidObstacle2\\Beta4.0.onnx",
-            "reward": -0.38333333333333336,
-            "creation_time": 1707831276.5861309,
+            "steps": 500091,
+            "file_path": "results\\4.0_AvoidObstacle2\\Beta4.0.onnx",
+            "reward": 14.60277777744664,
+            "creation_time": 1708842966.9870896,
             "auxillary_file_paths": [
-                "results\\4.0_avoidObstacle2\\Beta4.0\\Beta4.0-500103.pt"
+                "results\\4.0_AvoidObstacle2\\Beta4.0\\Beta4.0-500091.pt"
             ]
         }
     },

@@ -84,7 +84,7 @@ engine_settings:
   no_graphics: false
 environment_parameters: null
 checkpoint_settings:
-  run_id: 4.0_avoidObstacle
+  run_id: 4.0_AvoidObstacle
   initialize_from: null
   load_model: false
   resume: false

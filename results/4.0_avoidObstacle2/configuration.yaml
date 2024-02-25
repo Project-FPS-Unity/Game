@@ -49,7 +49,7 @@ behaviors:
           deterministic: false
         learning_rate: 0.0003
         encoding_size: 256
-    init_path: results\4.0_avoidObstacle\Beta4.0\checkpoint.pt
+    init_path: results\4.0_AvoidObstacle\Beta4.0\checkpoint.pt
     keep_checkpoints: 5
     checkpoint_interval: 50000
     max_steps: 500000
@@ -84,8 +84,8 @@ engine_settings:
   no_graphics: false
 environment_parameters: null
 checkpoint_settings:
-  run_id: 4.0_avoidObstacle2
-  initialize_from: 4.0_avoidObstacle
+  run_id: 4.0_AvoidObstacle2
+  initialize_from: 4.0_AvoidObstacle
   load_model: false
   resume: false
   force: false

@@ -1,0 +1,38 @@
+{
+    "EliteEnemy": {
+        "checkpoints": [
+            {
+                "steps": 499966,
+                "file_path": "results\\4.0_TestElite2\\EliteEnemy\\EliteEnemy-499966.onnx",
+                "reward": 172298.0,
+                "creation_time": 1708868742.3510513,
+                "auxillary_file_paths": [
+                    "results\\4.0_TestElite2\\EliteEnemy\\EliteEnemy-499966.pt"
+                ]
+            },
+            {
+                "steps": 500030,
+                "file_path": "results\\4.0_TestElite2\\EliteEnemy\\EliteEnemy-500030.onnx",
+                "reward": 172298.0,
+                "creation_time": 1708868742.4223065,
+                "auxillary_file_paths": [
+                    "results\\4.0_TestElite2\\EliteEnemy\\EliteEnemy-500030.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500030,
+            "file_path": "results\\4.0_TestElite2\\EliteEnemy.onnx",
+            "reward": 172298.0,
+            "creation_time": 1708868742.4223065,
+            "auxillary_file_paths": [
+                "results\\4.0_TestElite2\\EliteEnemy\\EliteEnemy-500030.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}
