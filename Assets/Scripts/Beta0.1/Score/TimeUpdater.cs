@@ -8,6 +8,7 @@ public class TimeUpdater : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI time;
     public static float timeRemain = 120f;
+    public static float surviveTime = 0f;
     public static int enemyKillCount = 0;
 
     private void Awake()
@@ -20,6 +21,7 @@ public class TimeUpdater : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             timeRemain = 120f;
+            surviveTime = 0f;
             enemyKillCount = 0;
         }
     }
@@ -28,6 +30,7 @@ public class TimeUpdater : MonoBehaviour
     void Update()
     {
         timeRemain = timeRemain - Time.deltaTime;
+        surviveTime += Time.deltaTime;
         time.text = "Time Remain : " + timeRemain.ToString("0.00") + " s";
     }
 }

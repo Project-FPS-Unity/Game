@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class EndingToMenu : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] private GameObject playerUI;
+    [SerializeField] private GameObject endPanel;
     // Update is called once per frame
     void Update()
     {
@@ -16,6 +19,8 @@ public class EndingToMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;
-        SceneManager.LoadScene(0);
+        playerUI.SetActive(false);
+        endPanel.SetActive(true);
     }
 }
+

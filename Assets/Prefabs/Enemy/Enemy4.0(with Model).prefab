@@ -7502,6 +7502,7 @@ GameObject:
   - component: {fileID: 3085861236523599964}
   - component: {fileID: 8951235778478348707}
   - component: {fileID: 8402150112340150363}
+  - component: {fileID: 6260854933220610100}
   m_Layer: 0
   m_Name: Enemy4.0(with Model)
   m_TagString: Enemy
@@ -7787,6 +7788,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &6260854933220610100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503783394807358230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b081d63a853ad4cb685346ca585c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  ammoBox: {fileID: 0}
 --- !u!1 &7689914332368925262
 GameObject:
   m_ObjectHideFlags: 0

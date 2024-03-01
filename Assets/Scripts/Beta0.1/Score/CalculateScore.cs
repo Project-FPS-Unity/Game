@@ -19,7 +19,30 @@ public class CalculateScore : MonoBehaviour
 
     private int Score()
     {
-        return (int)((TimeUpdater.timeRemain * 10) + (TimeUpdater.enemyKillCount * 100));
+        int stage = SceneManager.GetActiveScene().buildIndex;
+        float bonusScore = 0f;
+        int endingBonus = 0;
+        if (stage == 1)
+        {
+            bonusScore = 1;
+        }
+        else if (stage == 2)
+        {
+            bonusScore = 1.2f;
+        }
+        else if (stage == 3)
+        {
+            bonusScore = 1.4f;
+        }
+        else if (stage == 4 || stage == 5)
+        {
+            bonusScore = 1.6f;
+        }
+        if (stage == 5)
+        {
+            endingBonus = 1000;
+        }
+        return (int)((((TimeUpdater.surviveTime * 10) + (TimeUpdater.enemyKillCount * 100)) * bonusScore) + endingBonus);
     }
 
     private void Update()
@@ -29,10 +52,10 @@ public class CalculateScore : MonoBehaviour
             TimeUpdater.timeRemain = 0;
         }
         timeRemainText.text = TimeUpdater.timeRemain.ToString();
-        timeScoreText.text = (TimeUpdater.timeRemain * 10).ToString();
+        timeScoreText.text = (TimeUpdater.surviveTime * 10).ToString();
         enemyKillCountText.text = TimeUpdater.enemyKillCount.ToString();
         killScoreText.text = (100 * TimeUpdater.enemyKillCount).ToString();
-        totalScoreText.text = ((TimeUpdater.timeRemain * 10) + (100 * TimeUpdater.enemyKillCount)).ToString();
+        totalScoreText.text = Score().ToString();
     }
 
     public void UploadEntry()
