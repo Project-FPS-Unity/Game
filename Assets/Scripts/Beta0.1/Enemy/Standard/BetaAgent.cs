@@ -24,10 +24,9 @@ public class BetaAgent : Agent
 
     [SerializeField] private AnimationController animationState;
 
-    //for Train
-    //[SerializeField] private Renderer ground;
+    private PlayerHealth player;
 
-    private void Start()
+    private void Awake()
     {
         target = GameObject.Find("Model").GetComponent<Transform>();
     }

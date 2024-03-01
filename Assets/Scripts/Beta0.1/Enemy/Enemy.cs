@@ -47,7 +47,6 @@ public class Enemy : MonoBehaviour
     {
         TimeUpdater.timeRemain += timeBonus;
         TimeUpdater.enemyKillCount += 1;
-        //Instantiate(ammoBox, gameObject.transform, Quaternion.identity);
         Destroy(gameObject);
     }
 

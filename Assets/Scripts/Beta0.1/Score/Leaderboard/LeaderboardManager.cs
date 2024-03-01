@@ -6,46 +6,50 @@ using UnityEngine.SocialPlatforms.Impl;
 using Dan.Main;
 using Unity.VisualScripting;
 using Dan.Models;
+using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text[] _entryTextObjects;
-    [SerializeField] private TMP_InputField _usernameInputField;
+    [SerializeField] GameObject highscoreUIElementPrefab;
+    [SerializeField] Transform elementWrapper;
 
-    [SerializeField] private TextMeshProUGUI _playerScoreText;
+    List<GameObject> uiElements = new List<GameObject>();
 
-    private int Score => int.Parse(_playerScoreText.text);
+    HighScoreHandler highScoreHandler;
 
-    private void Start()
+    private void OnEnable()
     {
-        LoadEntries();
+        HighScoreHandler.onHighscoreListChanged += UpdateUI;
     }
 
-    private void LoadEntries()
+    private void OnDisable()
     {
-        Leaderboards.Leaderboard.GetEntries(entries =>
-        {
-            foreach (var t in _entryTextObjects)
-            {
-                t.text = "";
-            }
-
-            var length = Mathf.Min(_entryTextObjects.Length, entries.Length);
-            for (int i = 0; i < length; i++)
-            {
-                _entryTextObjects[i].text = $"{entries[i].Rank}. {entries[i].Username} - {entries[i].Score}";
-            }
-        });
+        HighScoreHandler.onHighscoreListChanged -= UpdateUI;
     }
 
-    public void UploadEntry()
+    private void UpdateUI(List<HighScoreElement> list)
     {
-        Leaderboards.Leaderboard.UploadNewEntry(_usernameInputField.text, Score, isSuccessful =>
+        for (int i = 0; i < list.Count; i++)
         {
-            if (isSuccessful)
+            HighScoreElement el = list[i];
+
+            if (el != null && el.points >= 0)
             {
-                LoadEntries();
+                if (i >= uiElements.Count)
+                {
+                    // instantiate new entry
+                    var inst = Instantiate(highscoreUIElementPrefab, Vector3.zero, Quaternion.identity);
+                    inst.transform.SetParent(elementWrapper, false);
+
+                    uiElements.Add(inst);
+                }
+
+                // write or overwrite name & points
+                var texts = uiElements[i].GetComponentsInChildren<TextMeshProUGUI>();
+                texts[0].text = el.playerName;
+                texts[1].text = el.points.ToString();
             }
-        });
+        }
     }
 }

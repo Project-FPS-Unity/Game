@@ -18,24 +18,27 @@ public class EquipmentHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int previousEquipment = currentEquipment;
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (Time.timeScale != 0f)
         {
-            if (currentEquipment >= transform.childCount - 1) currentEquipment = 0;
-            else currentEquipment++;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            if (currentEquipment <= 0) currentEquipment = transform.childCount - 1;
-            else currentEquipment--;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            currentEquipment = 0;
-        }
-        if (previousEquipment != currentEquipment) SelectedEquipment(currentEquipment);
+            int previousEquipment = currentEquipment;
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                if (currentEquipment >= transform.childCount - 1) currentEquipment = 0;
+                else currentEquipment++;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                if (currentEquipment <= 0) currentEquipment = transform.childCount - 1;
+                else currentEquipment--;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                currentEquipment = 0;
+            }
+            if (previousEquipment != currentEquipment) SelectedEquipment(currentEquipment);
 
-        Sway();
+            Sway();
+        }
     }
 
     private void SelectedEquipment(int selected)

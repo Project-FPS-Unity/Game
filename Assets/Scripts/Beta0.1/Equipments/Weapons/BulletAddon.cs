@@ -35,7 +35,7 @@ public abstract class BulletAddon : MonoBehaviour
         {
             PlayerHealth player = collision.gameObject.GetComponentInParent<PlayerHealth>();
             player.TakeDamage(damage);
-            //Debug.Log(collision.gameObject.GetComponentInParent<PlayerHealth>());
+            // Debug.Log(collision.gameObject.GetComponentInParent<PlayerHealth>());
         }
         if (collision.gameObject.layer != 8) // Layer 8 --> Invisible Wall
         {

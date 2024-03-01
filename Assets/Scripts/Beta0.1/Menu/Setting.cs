@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Setting : MonoBehaviour
 {
-    public float volume;
+    public static float volume = 0f;
     public AudioMixer audioMixer;
     public static float xlookSpeed = 200f;
     public static float ylookSpeed = 200f;
-    public static float cameraDirection = 1;
-    public void SetVolumn(float volume)
+
+    public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
     }
@@ -28,17 +29,5 @@ public class Setting : MonoBehaviour
     public void SetMouseYSensitivity(float ySen)
     {
         ylookSpeed = ySen * 10;
-    }
-
-    public void ToggleInvertCamera(bool isInvert)
-    {
-        if (isInvert == true)
-        {
-            cameraDirection = -1;
-        }
-        else
-        {
-            cameraDirection = 1;
-        }
     }
 }

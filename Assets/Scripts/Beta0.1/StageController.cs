@@ -8,11 +8,18 @@ public class StageController : MonoBehaviour
     private bool isChange = false;
     [Header("UI")]
     [SerializeField] private GameObject playerUI;
-    [SerializeField] private GameObject EndPanel;
+    [SerializeField] private GameObject endPanel;
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(TimeUpdater.timeRemain);
+        if (PlayerHealth.health.isDead)
+        {
+            // Ending
+            ToGameOverPanel();
+            //SceneManager.LoadSceneAsync(0);
+            isChange = true;
+        }
         if (TimeUpdater.timeRemain < 0 && isChange == false)
         {
             // Ending
@@ -28,6 +35,6 @@ public class StageController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         playerUI.SetActive(false);
-        EndPanel.SetActive(true);
+        endPanel.SetActive(true);
     }
 }
