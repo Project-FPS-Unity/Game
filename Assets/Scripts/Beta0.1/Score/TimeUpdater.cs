@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimeUpdater : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI time;
-    public static float timeRemain;
+    public static float timeRemain = 120f;
     public static int enemyKillCount = 0;
 
     private void Awake()
@@ -16,8 +17,11 @@ public class TimeUpdater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeRemain = 60f;
-        enemyKillCount = 0;
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            timeRemain = 120f;
+            enemyKillCount = 0;
+        }
     }
 
     // Update is called once per frame
