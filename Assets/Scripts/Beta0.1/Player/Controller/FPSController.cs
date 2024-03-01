@@ -20,6 +20,7 @@ public class FPSController : MonoBehaviour
     private bool canMove = true;
 
     CharacterController characterController;
+    [SerializeField] private Animator anim;
 
     private void Start()
     {
@@ -35,6 +36,14 @@ public class FPSController : MonoBehaviour
 
         // Press Shift to run
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        if (isRunning == true)
+        {
+            anim.SetBool("isRun", true);
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+        }
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;

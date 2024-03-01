@@ -15,6 +15,7 @@ public abstract class Gun : Equipment
     private Bullet bullet;
     private float reloadTime = 1f;
     private bool canReload = true;
+    [SerializeField] private Animator anim;
 
     [Header("Throwing")]
     [SerializeField] private float bulletForce;
@@ -74,6 +75,7 @@ public abstract class Gun : Equipment
         if (Input.GetMouseButton(0) && readyToFire && bullet.GetCurrentBullet() > 0)
         {
             FireBullet();
+            anim.SetBool("isShooting", true);
         }
         // reload
         if (Input.GetKeyDown(KeyCode.R))
@@ -115,6 +117,7 @@ public abstract class Gun : Equipment
     private void ReadyToFire()
     {
         readyToFire = true;
+        anim.SetBool("isShooting", false);
     }
 
     private void UpdateUI()
@@ -124,8 +127,6 @@ public abstract class Gun : Equipment
     }
 
     protected abstract Bullet SetAmmoCapacity();
-
-    protected abstract void FireAnimation();
     protected abstract void ReloadAnimation();
 
     public void FillAmmo()
