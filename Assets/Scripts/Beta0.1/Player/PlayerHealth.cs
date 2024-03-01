@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        //UpdateHealthUI();
+        UpdateHealthUI();
         // Test Damage and Heal System
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -60,31 +60,31 @@ public class PlayerHealth : MonoBehaviour
             health.RestoreHealth(Random.Range(5, 10));
         }  
     }
-    //private void UpdateHealthUI()
-    //{
-    //    // Debug.Log(health);
-    //    healthText.text = health.GetHealth().ToString();
-    //    float fillF = frontHealthBar.fillAmount;
-    //    float fillB = backHealthBar.fillAmount;
-    //    float hFraction = health.GetHealth() / health.GetMaxHealth();
-    //    if (fillB > hFraction)
-    //    {
-    //        frontHealthBar.fillAmount = hFraction;
-    //        backHealthBar.color = Color.red;
-    //        health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
-    //        float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
-    //        percentComplete *= percentComplete;
-    //        backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
-    //    }
+    private void UpdateHealthUI()
+    {
+        // Debug.Log(health);
+        healthText.text = health.GetHealth().ToString();
+        float fillF = frontHealthBar.fillAmount;
+        float fillB = backHealthBar.fillAmount;
+        float hFraction = health.GetHealth() / health.GetMaxHealth();
+        if (fillB > hFraction)
+        {
+            frontHealthBar.fillAmount = hFraction;
+            backHealthBar.color = Color.red;
+            health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
+            float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
+            percentComplete *= percentComplete;
+            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+        }
 
-    //    if (fillF < hFraction)
-    //    {
-    //        backHealthBar.color = Color.green;
-    //        backHealthBar.fillAmount = hFraction;
-    //        health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
-    //        float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
-    //        percentComplete *= percentComplete;
-    //        frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
-    //    }
-    //}
+        if (fillF < hFraction)
+        {
+            backHealthBar.color = Color.green;
+            backHealthBar.fillAmount = hFraction;
+            health.SetLerpTimer(health.GetLerpTimer() + Time.deltaTime);
+            float percentComplete = health.GetLerpTimer() / health.GetChipSpeed();
+            percentComplete *= percentComplete;
+            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
+        }
+    }
 }

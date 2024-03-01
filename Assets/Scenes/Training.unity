@@ -1028,6 +1028,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beta_Agents
       objectReference: {fileID: 0}
+    - target: {fileID: 3886846331451802028, guid: 5def38fa7628e4b4296295df8382e61b, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 54e9a162076bad143ae90d5976c40c08, type: 3}
     - target: {fileID: 6168604713033859575, guid: 5def38fa7628e4b4296295df8382e61b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

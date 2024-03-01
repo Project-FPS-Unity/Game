@@ -2592,7 +2592,6 @@ MonoBehaviour:
   target: {fileID: 8011793483379993375}
   heavy: {fileID: 8309771405775582458}
   animationState: {fileID: 3605768270074856039}
-  ground: {fileID: 8443604654645407483}
 --- !u!114 &4376539280480946963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8432,7 +8431,7 @@ GameObject:
   - component: {fileID: 8577422025954668761}
   - component: {fileID: 4166515772676433593}
   m_Layer: 0
-  m_Name: Model
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8569,6 +8568,7 @@ MonoBehaviour:
   frontHealthBar: {fileID: 0}
   backHealthBar: {fileID: 0}
   healthText: {fileID: 0}
+  medkitText: {fileID: 0}
 --- !u!143 &4166515772676433593
 CharacterController:
   m_ObjectHideFlags: 0

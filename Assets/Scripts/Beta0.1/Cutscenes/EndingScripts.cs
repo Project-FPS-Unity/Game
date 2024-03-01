@@ -13,7 +13,7 @@ public class EndingScripts : MonoBehaviour
         }
     }
     private void toMainMenu()
-    {
+    {        
         SceneManager.LoadScene(2);
     }
 }

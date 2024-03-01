@@ -28,12 +28,12 @@ public class BetaAgent : Agent
 
     private void Awake()
     {
-        target = GameObject.Find("Model").GetComponent<Transform>();
+        target = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     public override void OnEpisodeBegin()
     {
-        PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
+        //PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
         //transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
         //if (target != null) target.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
@@ -136,6 +136,7 @@ public class BetaAgent : Agent
 
     private void InCombat()
     {
+        Debug.Log("Player Found");
         RaycastHit hit;
         Debug.DrawRay(faceDirection.position, faceDirection.forward * 36f, Color.green);
         if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 36f))

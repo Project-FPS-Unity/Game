@@ -13,6 +13,9 @@ public class EndingToMenu : MonoBehaviour
 
     private void toMainMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0f;
         SceneManager.LoadScene(0);
     }
 }
