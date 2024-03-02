@@ -8129,7 +8129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 2310810204394796155}
   attackPoint: {fileID: 2685607730999945445}
-  objectToFire: {fileID: 3150825420721219469, guid: e6802c200f7135f47910653b976f9e17, type: 3}
+  objectToFire: {fileID: 3150825420721219469, guid: eada3c022078ad148afe4add87e1f801, type: 3}
   fireCooldown: 0.2
   bulletForce: 2
   bulletUpwardForce: 0
