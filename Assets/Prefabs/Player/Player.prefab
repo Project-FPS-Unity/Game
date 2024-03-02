@@ -8818,7 +8818,7 @@ MonoBehaviour:
   magazineUI: {fileID: 8436050576547141126}
   fireCooldown: 0.1
   anim: {fileID: 6416838372048383652}
-  bulletForce: 4
+  bulletForce: 6
   bulletUpwardForce: 0
   muzzleFlash: {fileID: 0}
 --- !u!1 &5701162227626978147
