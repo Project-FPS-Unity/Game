@@ -48,6 +48,7 @@ public abstract class Gun : Equipment
     {
         if (bullet.GetSpareBullet() > 0 && canReload == true)
         {
+            ReloadAnimation();
             canReload = false;
             int difBullet = bullet.GetMaxAmmo() - bullet.GetCurrentBullet(); ;
             // case reload then spare bullet will be negative
@@ -64,6 +65,7 @@ public abstract class Gun : Equipment
             }
         }
         yield return new WaitForSeconds(reloadTime);
+        anim.SetBool("isReload", false);
         canReload = true;
         readyToFire = true;
         UpdateUI();
@@ -127,12 +129,25 @@ public abstract class Gun : Equipment
     }
 
     protected abstract Bullet SetAmmoCapacity();
-    protected abstract void ReloadAnimation();
+    private void ReloadAnimation()
+    {
+        anim.SetBool("isReload", true);
+    }
 
     public void FillAmmo()
     {
-        bullet.SetSpareBullet(bullet.GetMaxSpareBullet());
-        bullet.SetCurrentBullet(bullet.GetMaxAmmo());
+        if (bullet.GetCurrentBullet() + bullet.GetSpareBullet() != bullet.GetMaxAmmo()+ bullet.GetMaxSpareBullet())
+        {
+            if (bullet.GetCurrentBullet() == bullet.GetMaxAmmo())
+            {
+                bullet.SetSpareBullet(bullet.GetMaxSpareBullet());
+            }
+            else if (bullet.GetCurrentBullet() < bullet.GetMaxAmmo())
+            {
+                int temp = (bullet.GetMaxAmmo() + bullet.GetMaxSpareBullet()) - bullet.GetCurrentBullet();
+                bullet.SetSpareBullet(temp);
+            }
+        }
         OnEnable();
     }
 }

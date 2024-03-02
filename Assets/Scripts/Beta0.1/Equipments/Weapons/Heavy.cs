@@ -22,9 +22,4 @@ public class Heavy : Gun
     {
         return new Bullet(maxAmmo, spareBullet);
     }
-
-    protected override void ReloadAnimation()
-    {
-        throw new System.NotImplementedException();
-    }
 }

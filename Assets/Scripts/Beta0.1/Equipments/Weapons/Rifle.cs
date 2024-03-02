@@ -11,9 +11,4 @@ public class Rifle : Gun
     {
         return new Bullet(maxAmmo, spareBullet);
     }
-
-    protected override void ReloadAnimation()
-    {
-        throw new System.NotImplementedException();
-    }
 }
