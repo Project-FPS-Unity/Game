@@ -1145,6 +1145,7 @@ MonoBehaviour:
   objectToFire: {fileID: 963122531031739792, guid: 8a614b8676a69b943b6ad000caca7e24, type: 3}
   magazineUI: {fileID: 8436050576547141126}
   fireCooldown: 0.1
+  anim: {fileID: 6416838372048383652}
   bulletForce: 4
   bulletUpwardForce: 0
   muzzleFlash: {fileID: 7692336672675980230, guid: b9e4e185fe3d3674ab50aa2a10a663cc, type: 3}
@@ -7762,6 +7763,7 @@ GameObject:
   - component: {fileID: 8768373490390383774}
   - component: {fileID: 3613618990699178208}
   - component: {fileID: 268284416197603556}
+  - component: {fileID: 6416838372048383652}
   m_Layer: 0
   m_Name: Equipments
   m_TagString: Untagged
@@ -7810,6 +7812,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09be0a3f77c24f4bb78fe837df26502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6416838372048383652
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655691216412004758}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c33975826c60a584fbcae12cfd5d1f8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4736397711541876092
 GameObject:
   m_ObjectHideFlags: 0
@@ -8438,7 +8461,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6260440575528020896}
-  - component: {fileID: 2905142494728950723}
   - component: {fileID: 3378065858955240535}
   m_Layer: 0
   m_Name: Heavy
@@ -8471,27 +8493,6 @@ Transform:
   - {fileID: 4360801433499642537}
   m_Father: {fileID: 8768373490390383774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2905142494728950723
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5558738054401230435}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b556ffc06a76c6640b7e316da4a14a95, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3378065858955240535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8509,6 +8510,7 @@ MonoBehaviour:
   objectToFire: {fileID: 3150825420721219469, guid: e6802c200f7135f47910653b976f9e17, type: 3}
   magazineUI: {fileID: 8436050576547141126}
   fireCooldown: 0.1
+  anim: {fileID: 6416838372048383652}
   bulletForce: 4
   bulletUpwardForce: 0
   muzzleFlash: {fileID: 0}
@@ -15378,6 +15380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 3096208434798925086}
+  anim: {fileID: 6416838372048383652}
 --- !u!114 &1932266363526952470
 MonoBehaviour:
   m_ObjectHideFlags: 0
