@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EliteArms : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             PlayerHealth.health.TakeDamage(20);
         }
