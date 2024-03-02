@@ -28,16 +28,16 @@ public class EliteAgent : Agent
 
     private void Start()
     {
-        playerTarget = GameObject.Find("Player").GetComponent<Transform>();
+        //playerTarget = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     public override void OnEpisodeBegin()
     {
-        //PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
+        PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
-        //transform.localPosition = new Vector3(Random.Range(-10f, 10f), 0.5f, Random.Range(-10f, 10f));
-        //playerTarget.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
-        //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        transform.localPosition = new Vector3(Random.Range(-10f, 10f), 0.5f, Random.Range(-10f, 10f));
+        playerTarget.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -132,7 +132,7 @@ public class EliteAgent : Agent
                 if (PlayerHealth.health.GetCurrentHealth() <= 0)
                 {
                     GetReward(4);
-                    //EndEpisode();
+                    EndEpisode();
                 }
                 Attack();
             }
@@ -194,7 +194,7 @@ public class EliteAgent : Agent
         if (foundObstacle_F && foundObstacle_S)
         {
             GetReward(1);
-            //EndEpisode();
+            EndEpisode();
         }
         if (playerFound_F && playerFound_S)
         {

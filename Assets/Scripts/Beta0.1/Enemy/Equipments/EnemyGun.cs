@@ -28,12 +28,12 @@ public abstract class EnemyGun : Equipment
 
     private void OnEnable()
     {
-        UpdateUI();
+
     }
 
     protected override void Action()
     {
-        GetKeyToAction();
+
     }
 
     // this method call Start()
@@ -58,23 +58,8 @@ public abstract class EnemyGun : Equipment
         yield return new WaitForSeconds(reloadTime);
         canReload = true;
         readyToFire = true;
-        UpdateUI();
     }
 
-    private void GetKeyToAction()
-    {
-        //// hold left mouse
-        //if (Input.GetMouseButton(0) && readyToFire && bullet.GetCurrentBullet() > 0)
-        //{
-        //    FireBullet();
-        //}
-        //// reload
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    StartCoroutine(Reload());
-        //    return;
-        //}
-    }
     private void FireBullet()
     {
         readyToFire = false;
@@ -100,20 +85,12 @@ public abstract class EnemyGun : Equipment
 
         bullet.SetCurrentBullet(bullet.GetCurrentBullet() - 1);
 
-        UpdateUI();
-
         // Implement throw cooldown
         Invoke(nameof(ReadyToFire), fireCooldown);
     }
     private void ReadyToFire()
     {
         readyToFire = true;
-    }
-
-    private void UpdateUI()
-    {
-        MagazineUI.frontMagazine = bullet.GetCurrentBullet();
-        MagazineUI.backMagazine = bullet.GetSpareBullet();
     }
 
     public void ShootTrigger()

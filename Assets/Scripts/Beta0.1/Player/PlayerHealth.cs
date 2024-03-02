@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        medkitText.text = "x " + Medkit.currentMedkit.ToString();
+        //medkitText.text = "x " + Medkit.currentMedkit.ToString();
         //Health Check
         health.CheckHealth();
         //if (health.isDead) Debug.Log("Die");
@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
     private void Health()
     {
         health.SetHealth(Mathf.Clamp(health.GetHealth(), 0, health.GetMaxHealth()));
-        UpdateHealthUI();
+        //UpdateHealthUI();
         // Test Damage and Heal System
         if (Input.GetKeyDown(KeyCode.F))
         {
