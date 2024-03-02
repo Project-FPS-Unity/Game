@@ -21,10 +21,12 @@ public abstract class Gun : Equipment
     [SerializeField] private float bulletForce;
     [SerializeField] private float bulletUpwardForce;
     private bool readyToFire;
+    private PlayerSFX sfx;
 
     private void Awake()
     {
         bullet = SetAmmoCapacity();
+        sfx = GameObject.Find("PlayerModel").GetComponent<PlayerSFX>();
     }
 
     private void OnEnable()
@@ -78,7 +80,10 @@ public abstract class Gun : Equipment
         {
             FireBullet();
             anim.SetBool("isShooting", true);
+            sfx.Fire();
         }
+        //Stop sfx
+        if (Input.GetKeyUp(KeyCode.Mouse0)) sfx.StopFire();
         // reload
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -132,6 +137,7 @@ public abstract class Gun : Equipment
     private void ReloadAnimation()
     {
         anim.SetBool("isReload", true);
+        sfx.Reload();
     }
 
     public void FillAmmo()

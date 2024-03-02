@@ -21,6 +21,7 @@ public class FPSController : MonoBehaviour
 
     CharacterController characterController;
     [SerializeField] private Animator anim;
+    [SerializeField] private Animator moveAnim;
 
     private void Start()
     {
@@ -63,7 +64,16 @@ public class FPSController : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            moveAnim.SetBool("isWalking", true);
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            moveAnim.SetBool("isWalking", false);
+        }
         characterController.Move(moveDirection * Time.deltaTime);
+
 
         if (canMove)
         {
@@ -73,4 +83,5 @@ public class FPSController : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * Setting.ylookSpeed * Time.deltaTime, 0);
         }
     }
+
 }

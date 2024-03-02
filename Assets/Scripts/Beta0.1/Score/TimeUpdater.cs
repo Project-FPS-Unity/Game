@@ -23,6 +23,7 @@ public class TimeUpdater : MonoBehaviour
             timeRemain = 120f;
             surviveTime = 0f;
             enemyKillCount = 0;
+            Time.timeScale = 1f;
         }
     }
 
