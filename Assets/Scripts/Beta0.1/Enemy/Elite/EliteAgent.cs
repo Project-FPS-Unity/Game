@@ -124,8 +124,8 @@ public class EliteAgent : Agent
     private void InCombat()
     {
         RaycastHit hit;
-        Debug.DrawRay(faceDirection.position, faceDirection.forward * 4f, Color.green);
-        if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 4f))
+        Debug.DrawRay(faceDirection.position, faceDirection.forward * 5f, Color.green);
+        if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 5f))
         {
             if (hit.transform.gameObject.tag == "Player")
             {
