@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EliteArms : MonoBehaviour
 {
+    public bool ishit;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            PlayerHealth.health.TakeDamage(20);
+            Debug.Log("Attacking");
+            ishit = true;
         }
     }
 }

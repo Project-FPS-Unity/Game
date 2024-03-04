@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Resume();
             }
-            else if (!gameIsPaused)
+            else if (!gameIsPaused && PlayerHealth.health.isDead == false)
             {
                 Pause();
             }

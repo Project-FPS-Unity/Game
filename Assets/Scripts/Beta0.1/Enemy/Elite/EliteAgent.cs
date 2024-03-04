@@ -11,7 +11,7 @@ public class EliteAgent : Agent
     [SerializeField] private RayPerceptionSensorComponent3D sideRay;
 
     private bool isCombat = false;
-    private bool inAttackRange = false;
+    private bool isStuck = false;
     [SerializeField] private Transform playerTarget;
     [SerializeField] private EliteArms hitboxLeft;
     [SerializeField] private EliteArms hitboxRight;
@@ -59,6 +59,10 @@ public class EliteAgent : Agent
         CheckRay();
         Move(moveZ);
         Turn(moveY, moveSpeed);
+        if (isStuck)
+        {
+            TurnBack(moveSpeed);
+        }
         if (isCombat)
         {
             InCombat();
@@ -118,6 +122,25 @@ public class EliteAgent : Agent
     private void Attack()
     {
         animationState.AnimationManager("Attack");
+        if (hitboxLeft.ishit)
+        {
+            PlayerHealth.health.TakeDamage(20);
+            hitboxLeft.ishit = false;
+        }
+        if (hitboxRight.ishit)
+        {
+            PlayerHealth.health.TakeDamage(20);
+            hitboxRight.ishit = false;
+        }
+    }
+
+    private void TurnBack(float speed)
+    {
+        //Vector3 _direction = (transform.forward * -1).normalized;
+        //Quaternion _lookRotation = Quaternion.LookRotation(_direction);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * speed);
+        transform.Rotate(0, 180 * speed * Time.deltaTime, 0);
+        isStuck = false;
     }
 
     private void InCombat()
@@ -135,7 +158,6 @@ public class EliteAgent : Agent
                 }
                 Attack();
             }
-
         }
     }
 
@@ -192,8 +214,9 @@ public class EliteAgent : Agent
         }
         if (foundObstacle_F && foundObstacle_S)
         {
-            GetReward(1);
-            EndEpisode();
+            //GetReward(1);
+            //EndEpisode();
+            isStuck = true;
         }
         if (playerFound_F && playerFound_S)
         {
