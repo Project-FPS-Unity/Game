@@ -1,0 +1,29 @@
+{
+    "EliteEnemy": {
+        "checkpoints": [
+            {
+                "steps": 4266,
+                "file_path": "results\\test\\EliteEnemy\\EliteEnemy-4266.onnx",
+                "reward": -2908.125,
+                "creation_time": 1709582156.9240034,
+                "auxillary_file_paths": [
+                    "results\\test\\EliteEnemy\\EliteEnemy-4266.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 4266,
+            "file_path": "results\\test\\EliteEnemy.onnx",
+            "reward": -2908.125,
+            "creation_time": 1709582156.9240034,
+            "auxillary_file_paths": [
+                "results\\test\\EliteEnemy\\EliteEnemy-4266.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

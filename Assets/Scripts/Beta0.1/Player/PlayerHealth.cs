@@ -34,7 +34,6 @@ public class PlayerHealth : MonoBehaviour
         medkitText.text = "x " + Medkit.currentMedkit.ToString();
         //Health Check
         health.CheckHealth();
-        //if (health.isDead) Debug.Log("Die");
         Health();
     }
     public void TakeDamage(float damage)

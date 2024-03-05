@@ -145,9 +145,7 @@ public class BetaAgent : Agent
             {
                 if (PlayerHealth.health.GetCurrentHealth() <= 0)
                 {
-                    //Debug.Log("Player Defeated");
                     GetReward(4);
-                    //ground.material.SetColor("_Color", Color.green);
                     //EndEpisode();
                 }
                 Shoot();
@@ -203,7 +201,6 @@ public class BetaAgent : Agent
         if (foundObstacle_F && foundObstacle_S)
         {
             GetReward(1);
-            //ground.material.SetColor("_Color", Color.red);
             //EndEpisode();
         }
         if (playerFound_F && !isCombat)

@@ -10,7 +10,6 @@ public class EliteArms : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Attacking");
             ishit = true;
         }
     }

@@ -7803,7 +7803,7 @@ MonoBehaviour:
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   itemDropList:
   - {fileID: 9025669455261521802, guid: 8a5e3a0d7f0cf284cb642b5c7244a556, type: 3}
   - {fileID: 7145165998672086327, guid: 8a271fde7aad44b5a8ec8025c447c359, type: 3}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -10,8 +8,9 @@ public class EliteAgent : Agent
     [SerializeField] private RayPerceptionSensorComponent3D frontRay;
     [SerializeField] private RayPerceptionSensorComponent3D sideRay;
 
-    private bool isCombat = false;
     private bool isStuck = false;
+    private bool isAttack = false;
+    private float distanceToTarget;
     [SerializeField] private Transform playerTarget;
     [SerializeField] private EliteArms hitboxLeft;
     [SerializeField] private EliteArms hitboxRight;
@@ -25,28 +24,32 @@ public class EliteAgent : Agent
 
     [SerializeField] private EliteAnimationController animationState;
 
-    private void Start()
+    private void Awake()
     {
         playerTarget = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     public override void OnEpisodeBegin()
     {
+        isStuck = false;
+        isAttack = false;
         //PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
-        isCombat = false;
-        //transform.localPosition = new Vector3(Random.Range(-10f, 10f), 0.5f, Random.Range(-10f, 10f));
-        //playerTarget.localPosition = new Vector3(Random.Range(-15f, 15f), 1.5f, Random.Range(-15f, 15f));
+        if (playerTarget != null) distanceToTarget = Vector3.Distance(playerTarget.transform.position, transform.position);
+        //transform.localPosition = new Vector3(Random.Range(-5f, 5f), 0.5f, 5f);
+        //if (playerTarget != null) playerTarget.localPosition = new Vector3(Random.Range(-10f, 10f), 1.8f, -5f);
         //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(transform.localRotation.eulerAngles / 180.0f - Vector3.one);
+        sensor.AddObservation(isAttack);
+        sensor.AddObservation(transform.forward);
+        sensor.AddObservation(transform.rotation.eulerAngles / 180.0f - Vector3.one);
         if (playerTarget != null)
         {
-            sensor.AddObservation(playerTarget.localPosition);
-            sensor.AddObservation(Vector3.Distance(transform.localPosition, playerTarget.localPosition));
+            sensor.AddObservation((playerTarget.transform.position - transform.position).normalized);
+            sensor.AddObservation(distanceToTarget);
+            sensor.AddObservation(playerTarget.position);
         }
     }
 
@@ -55,19 +58,18 @@ public class EliteAgent : Agent
         moveX = actions.ContinuousActions[0];
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
-
-        CheckRay();
-        Move(moveZ);
-        Turn(moveY, moveSpeed);
         if (isStuck)
         {
             TurnBack(moveSpeed);
+            isStuck = false;
         }
-        if (isCombat)
+        if (isAttack)
         {
-            InCombat();
+            Attack();
         }
-
+        Move(-moveZ);
+        Turn(moveY, moveSpeed);
+        CheckRay();
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -82,23 +84,23 @@ public class EliteAgent : Agent
     {
         switch (number)
         {
-            case 0: //Walk backward or Struggle aim
-                AddReward(-5.0f);
+            case 0: //Walk forward
+                AddReward(+2.5f);
                 break;
-            case 1: //Hitwall
-                AddReward(-30.0f);
+            case 1: //turn back from wall
+                AddReward(+5.0f);
                 break;
             case 2: //Found Player
-                AddReward(+4.0f);
+                AddReward(+10.0f);
                 break;
             case 3: //Run toward Player
-                AddReward(+10.0f);
+                AddReward(+20.0f);
                 break;
             case 4: //Attack Hit
-                AddReward(+10.0f);
+                AddReward(+30.0f);
                 break;
             case 5: //Player Die
-                AddReward(+15.0f);
+                AddReward(+50.0f);
                 break;
             default:
                 // code block
@@ -110,8 +112,8 @@ public class EliteAgent : Agent
     {
         animationState.AnimationManager("Walk");
         moveToDirection = transform.forward * z;
-        if (z < 0) GetReward(0);
-        transform.localPosition += moveToDirection * Time.deltaTime * moveSpeed;
+        if (z > 0) GetReward(0);
+        transform.position += moveToDirection * Time.deltaTime * moveSpeed;
     }
 
     private void Turn(float y, float speed)
@@ -121,14 +123,22 @@ public class EliteAgent : Agent
 
     private void Attack()
     {
-        animationState.AnimationManager("Attack");
+        if (PlayerHealth.health.GetCurrentHealth() <= 0)
+        {
+            GetReward(5);
+            EndEpisode();
+        }
+        else animationState.AnimationManager("Attack");
+
         if (hitboxLeft.ishit)
         {
+            GetReward(4);
             PlayerHealth.health.TakeDamage(20);
             hitboxLeft.ishit = false;
         }
         if (hitboxRight.ishit)
         {
+            GetReward(4);
             PlayerHealth.health.TakeDamage(20);
             hitboxRight.ishit = false;
         }
@@ -136,29 +146,7 @@ public class EliteAgent : Agent
 
     private void TurnBack(float speed)
     {
-        //Vector3 _direction = (transform.forward * -1).normalized;
-        //Quaternion _lookRotation = Quaternion.LookRotation(_direction);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * speed);
-        transform.Rotate(0, 180 * speed * Time.deltaTime, 0);
-        isStuck = false;
-    }
-
-    private void InCombat()
-    {
-        RaycastHit hit;
-        Debug.DrawRay(faceDirection.position, faceDirection.forward * 5f, Color.green);
-        if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 5f))
-        {
-            if (hit.transform.gameObject.tag == "Player")
-            {
-                if (PlayerHealth.health.GetCurrentHealth() <= 0)
-                {
-                    GetReward(4);
-                    EndEpisode();
-                }
-                Attack();
-            }
-        }
+        transform.Rotate(0, 180.0f * speed, 0);
     }
 
     private void CheckRay()
@@ -166,8 +154,8 @@ public class EliteAgent : Agent
         //Front vision
         RayPerceptionOutput frontOut = RayPerceptionSensor.Perceive(frontRay.GetRayPerceptionInput());
         int rayFrontLength = frontOut.RayOutputs.Length;
-        bool playerFound_F = false;
-        bool foundObstacle_F = false;
+        bool foundObstacle = false;
+        bool inAttackRange = false;
         for (int i = 0; i < rayFrontLength; i++)
         {
             GameObject goHit = frontOut.RayOutputs[i].HitGameObject;
@@ -176,56 +164,58 @@ public class EliteAgent : Agent
                 var EnemyDirection = frontOut.RayOutputs[i].EndPositionWorld - frontOut.RayOutputs[i].StartPositionWorld;
                 var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
-                if (goHit.gameObject.tag == "Untagged" && rayHitDistance <= 20.0f)
+                if (goHit.CompareTag("Player"))
                 {
-                    foundObstacle_F = true;
+                    inAttackRange = true;
                 }
-                if (goHit.gameObject.tag == "Player")
+                if (goHit.CompareTag("Untagged"))
                 {
-                    playerFound_F = true;
+                    foundObstacle = true;
                 }
-                if (goHit.gameObject.tag == "Player" && rayHitDistance >= 6f) animationState.AnimationManager("StopAttack");
             }
         }
 
-        //Side hit box
+        //Side vision
         RayPerceptionOutput sideOut = RayPerceptionSensor.Perceive(sideRay.GetRayPerceptionInput());
         int raySideLength = sideOut.RayOutputs.Length;
-        bool playerFound_S = false;
-        bool foundObstacle_S = false;
+        bool seePlayer = false;
         for (int i = 0; i < raySideLength; i++)
         {
             GameObject goHit = sideOut.RayOutputs[i].HitGameObject;
             if (goHit != null)
             {
-                var rayDirection = sideOut.RayOutputs[i].EndPositionWorld - sideOut.RayOutputs[i].StartPositionWorld;
-                var scaledRayLength = rayDirection.magnitude;
+                var EnemyDirection = sideOut.RayOutputs[i].EndPositionWorld - sideOut.RayOutputs[i].StartPositionWorld;
+                var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = sideOut.RayOutputs[i].HitFraction * scaledRayLength;
-
-                if (goHit.gameObject.tag == "Untagged")
+                if (goHit.CompareTag("Player"))
                 {
-                    foundObstacle_S = true;
+                    if (rayHitDistance < distanceToTarget)
+                    {
+                        distanceToTarget = rayHitDistance;
+                        GetReward(3);
+                    }
                 }
-                if (goHit.gameObject.tag == "Player")
+                if (goHit.CompareTag("Player"))
                 {
-                    playerFound_S = true;
+                    seePlayer = true;
+                }
+                else
+                {
+                    seePlayer = false;
                 }
             }
         }
-        if (foundObstacle_F && foundObstacle_S)
+
+        if (foundObstacle) isStuck = true;
+        if (seePlayer)
         {
-            //GetReward(1);
-            //EndEpisode();
-            isStuck = true;
-        }
-        if (playerFound_F && playerFound_S)
-        {
+            animationState.AnimationManager("PlayerFound");
             GetReward(2);
         }
-        if (playerFound_F)
+        if (inAttackRange)
         {
-            isCombat = true;
-            animationState.AnimationManager("PlayerFound");
+            isAttack = true;
+            GetReward(2);
         }
     }
 }
