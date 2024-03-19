@@ -14,6 +14,7 @@ public class BetaAgent : Agent
     [SerializeField] private Transform target;
     [SerializeField] private EnemyHeavy heavy;
     private bool isCombat = false;
+    private float distanceToTarget;
 
     private Vector3 moveToDirection;
     private float moveX;
@@ -26,13 +27,10 @@ public class BetaAgent : Agent
 
     private PlayerHealth player;
 
-    private void Awake()
-    {
-        target = GameObject.Find("Player").GetComponent<Transform>();
-    }
-
     public override void OnEpisodeBegin()
     {
+        target = GameObject.Find("Player").GetComponent<Transform>();
+        distanceToTarget = Vector3.Distance(target.transform.localPosition, transform.position);
         //PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
         isCombat = false;
         //transform.localPosition = new Vector3(Random.Range(-20f, 20f), 1.5f, Random.Range(-20f, 20f));
@@ -42,14 +40,22 @@ public class BetaAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(transform.localRotation.eulerAngles / 180.0f - Vector3.one);
-        //sensor.AddObservation(target.localPosition);
-        //sensor.AddObservation(Vector3.Distance(transform.localPosition, target.localPosition));
+        //sensor.AddObservation(transform.localPosition);
+        //sensor.AddObservation(transform.localRotation.eulerAngles / 180.0f - Vector3.one);
+        ////sensor.AddObservation(target.localPosition);
+        ////sensor.AddObservation(Vector3.Distance(transform.localPosition, target.localPosition));
+        //if (target != null)
+        //{
+        //    sensor.AddObservation(target.localPosition);
+        //    sensor.AddObservation(Vector3.Distance(transform.localPosition, target.localPosition));
+        //}
+        sensor.AddObservation(transform.forward);
+        sensor.AddObservation(transform.rotation.eulerAngles / 180.0f - Vector3.one);
         if (target != null)
         {
-            sensor.AddObservation(target.localPosition);
-            sensor.AddObservation(Vector3.Distance(transform.localPosition, target.localPosition));
+            sensor.AddObservation((target.transform.localPosition - transform.position).normalized);
+            sensor.AddObservation(distanceToTarget);
+            sensor.AddObservation(target.transform.localPosition);
         }
     }
 
@@ -63,13 +69,12 @@ public class BetaAgent : Agent
         {
             target = transform;
         }
-
         CheckRay();
-
         if (!isCombat)
         {
             Turn(moveY, moveSpeed, false);//turn
             Move(moveZ);
+
         }
         else if (isCombat)
         {
@@ -97,13 +102,13 @@ public class BetaAgent : Agent
                 AddReward(-0.1f);
                 break;
             case 1: //Hitwall
-                AddReward(-20.0f);
+                AddReward(-5.0f);
                 break;
             case 2: //Found Player
-                AddReward(+4.0f);
+                AddReward(+5.0f);
                 break;
             case 3: //Shoot
-                AddReward(+2.5f);
+                AddReward(+7.5f);
                 break;
             case 4: //Player Die
                 AddReward(+15.0f);
@@ -132,11 +137,11 @@ public class BetaAgent : Agent
     {
         animationState.AnimationManager("Shoot");
         heavy.ShootTrigger();
+        GetReward(3);
     }
 
     private void InCombat()
     {
-        Debug.Log("Player Found");
         RaycastHit hit;
         Debug.DrawRay(faceDirection.position, faceDirection.forward * 36f, Color.green);
         if (Physics.Raycast(faceDirection.position, faceDirection.forward, out hit, 36f))
@@ -146,7 +151,7 @@ public class BetaAgent : Agent
                 if (PlayerHealth.health.GetCurrentHealth() <= 0)
                 {
                     GetReward(4);
-                    //EndEpisode();
+                    EndEpisode();
                 }
                 Shoot();
             }
@@ -168,7 +173,7 @@ public class BetaAgent : Agent
                 var EnemyDirection = frontOut.RayOutputs[i].EndPositionWorld - frontOut.RayOutputs[i].StartPositionWorld;
                 var scaledRayLength = EnemyDirection.magnitude;
                 float rayHitDistance = frontOut.RayOutputs[i].HitFraction * scaledRayLength;
-                if (goHit.gameObject.tag == "Untagged" && rayHitDistance <= 10.0f)
+                if (goHit.gameObject.tag == "Untagged" && rayHitDistance <= 5.0f)
                 {
                     foundObstacle_F = true;
                 }
@@ -182,7 +187,6 @@ public class BetaAgent : Agent
         //Side hit box
         RayPerceptionOutput sideOut = RayPerceptionSensor.Perceive(sideRay.GetRayPerceptionInput());
         int raySideLength = sideOut.RayOutputs.Length;
-        bool foundObstacle_S = false;
         for (int i = 0; i < raySideLength; i++)
         {
             GameObject goHit = sideOut.RayOutputs[i].HitGameObject;
@@ -194,14 +198,13 @@ public class BetaAgent : Agent
 
                 if (goHit.gameObject.tag == "Untagged")
                 {
-                    foundObstacle_S = true;
+
                 }
             }
         }
-        if (foundObstacle_F && foundObstacle_S)
+        if (foundObstacle_F)
         {
             GetReward(1);
-            //EndEpisode();
         }
         if (playerFound_F && !isCombat)
         {

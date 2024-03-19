@@ -7,6 +7,7 @@ public class EnemiesSpawner : MonoBehaviour
     [Header("Enemy Settings")]
     [SerializeField] private GameObject theEnemy;
     [SerializeField] private int maxEnemies;
+    [SerializeField] private int radius;
 
     private int xPos;
     private int zPos;
@@ -23,8 +24,8 @@ public class EnemiesSpawner : MonoBehaviour
     {
         while(enemyCount < maxEnemies)
         {
-            xPos = Random.Range(-10, 10);
-            zPos = Random.Range(-10,10);
+            xPos = Random.Range(-radius, radius);
+            zPos = Random.Range(-radius, radius);
             Instantiate(theEnemy, new Vector3(transform.position.x + xPos, transform.position.y, transform.position.z + zPos), Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
             enemyCount++;

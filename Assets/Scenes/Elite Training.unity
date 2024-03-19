@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!21 &1468026482
+--- !u!21 &613682784
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -4024,7 +4024,7 @@ PrefabInstance:
     - target: {fileID: 1576492770631320845, guid: b5fdc132243bc1d48a0e50b439dbfaa1, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 1468026482}
+      objectReference: {fileID: 613682784}
     - target: {fileID: 2171866124509773291, guid: b5fdc132243bc1d48a0e50b439dbfaa1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4072,7 +4072,7 @@ PrefabInstance:
     - target: {fileID: 5815170980394116879, guid: b5fdc132243bc1d48a0e50b439dbfaa1, type: 3}
       propertyPath: playerTarget
       value: 
-      objectReference: {fileID: 3474596623976648199}
+      objectReference: {fileID: 0}
     - target: {fileID: 9014820234172025505, guid: b5fdc132243bc1d48a0e50b439dbfaa1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

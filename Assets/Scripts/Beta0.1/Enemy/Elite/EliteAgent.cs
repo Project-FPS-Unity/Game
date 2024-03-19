@@ -24,17 +24,13 @@ public class EliteAgent : Agent
 
     [SerializeField] private EliteAnimationController animationState;
 
-    private void Awake()
-    {
-        playerTarget = GameObject.Find("Player").GetComponent<Transform>();
-    }
-
     public override void OnEpisodeBegin()
     {
+        playerTarget = GameObject.Find("Player").GetComponent<Transform>();
         isStuck = false;
         isAttack = false;
         //PlayerHealth.health.SetHealth(PlayerHealth.health.GetMaxHealth());
-        if (playerTarget != null) distanceToTarget = Vector3.Distance(playerTarget.transform.position, transform.position);
+        if (playerTarget != null) distanceToTarget = Vector3.Distance(playerTarget.transform.localPosition, transform.position);
         //transform.localPosition = new Vector3(Random.Range(-5f, 5f), 0.5f, 5f);
         //if (playerTarget != null) playerTarget.localPosition = new Vector3(Random.Range(-10f, 10f), 1.8f, -5f);
         //transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
@@ -47,9 +43,9 @@ public class EliteAgent : Agent
         sensor.AddObservation(transform.rotation.eulerAngles / 180.0f - Vector3.one);
         if (playerTarget != null)
         {
-            sensor.AddObservation((playerTarget.transform.position - transform.position).normalized);
+            sensor.AddObservation((playerTarget.transform.localPosition - transform.position).normalized);
             sensor.AddObservation(distanceToTarget);
-            sensor.AddObservation(playerTarget.position);
+            sensor.AddObservation(playerTarget.transform.localPosition);
         }
     }
 
@@ -58,6 +54,7 @@ public class EliteAgent : Agent
         moveX = actions.ContinuousActions[0];
         moveY = actions.ContinuousActions[1];
         moveZ = actions.ContinuousActions[2];
+        distanceToTarget = Vector3.Distance(playerTarget.transform.localPosition, transform.position);
         if (isStuck)
         {
             TurnBack(moveSpeed);
@@ -67,7 +64,7 @@ public class EliteAgent : Agent
         {
             Attack();
         }
-        Move(-moveZ);
+        Move(moveZ);
         Turn(moveY, moveSpeed);
         CheckRay();
     }
@@ -191,7 +188,6 @@ public class EliteAgent : Agent
                 {
                     if (rayHitDistance < distanceToTarget)
                     {
-                        distanceToTarget = rayHitDistance;
                         GetReward(3);
                     }
                 }

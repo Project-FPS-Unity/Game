@@ -735,7 +735,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2171866124509773291}
   - component: {fileID: 7869740391070150316}
-  - component: {fileID: 1943416778656855378}
+  - component: {fileID: 4777455522113561179}
   - component: {fileID: 3203497228737897005}
   - component: {fileID: 7837751721462344645}
   - component: {fileID: 2258432586942170677}
@@ -799,7 +799,7 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
---- !u!54 &1943416778656855378
+--- !u!54 &4777455522113561179
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -807,7 +807,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3894786637122147422}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 15
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -825,7 +825,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!95 &3203497228737897005
 Animator:
   serializedVersion: 5
@@ -1399,7 +1399,10 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  itemDropList: []
+  itemDropList:
+  - {fileID: 7145165998672086327, guid: 8a271fde7aad44b5a8ec8025c447c359, type: 3}
+  - {fileID: 7145165998672086327, guid: 8a271fde7aad44b5a8ec8025c447c359, type: 3}
+  - {fileID: 9025669455261521802, guid: 8a5e3a0d7f0cf284cb642b5c7244a556, type: 3}
 --- !u!1 &3927499019051711923
 GameObject:
   m_ObjectHideFlags: 0

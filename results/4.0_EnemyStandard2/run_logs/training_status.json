@@ -1,0 +1,66 @@
+{
+    "Beta4.0": {
+        "checkpoints": [
+            {
+                "steps": 349985,
+                "file_path": "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-349985.onnx",
+                "reward": 281.43333406801577,
+                "creation_time": 1709667875.8938482,
+                "auxillary_file_paths": [
+                    "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-349985.pt"
+                ]
+            },
+            {
+                "steps": 399976,
+                "file_path": "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-399976.onnx",
+                "reward": 276.21666882832847,
+                "creation_time": 1709668021.3082821,
+                "auxillary_file_paths": [
+                    "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-399976.pt"
+                ]
+            },
+            {
+                "steps": 449901,
+                "file_path": "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-449901.onnx",
+                "reward": 297.21276636326564,
+                "creation_time": 1709668167.4372096,
+                "auxillary_file_paths": [
+                    "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-449901.pt"
+                ]
+            },
+            {
+                "steps": 499958,
+                "file_path": "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-499958.onnx",
+                "reward": 350.148683924424,
+                "creation_time": 1709668312.5095766,
+                "auxillary_file_paths": [
+                    "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-499958.pt"
+                ]
+            },
+            {
+                "steps": 500050,
+                "file_path": "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-500050.onnx",
+                "reward": 349.7896101072237,
+                "creation_time": 1709668312.654262,
+                "auxillary_file_paths": [
+                    "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-500050.pt"
+                ]
+            }
+        ],
+        "elo": 1202.1381837202903,
+        "final_checkpoint": {
+            "steps": 500050,
+            "file_path": "results\\4.0_EnemyStandard2\\Beta4.0.onnx",
+            "reward": 349.7896101072237,
+            "creation_time": 1709668312.654262,
+            "auxillary_file_paths": [
+                "results\\4.0_EnemyStandard2\\Beta4.0\\Beta4.0-500050.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}
